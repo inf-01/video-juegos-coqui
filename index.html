@@ -1,0 +1,1268 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Juegos Coqui | Next-Gen Gaming Experience</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&family=Syncopate:wght@700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'cyber-black': '#050508',
+                        'cyber-dark': '#0a0a0f',
+                        'cyber-gray': '#12121a',
+                        'neon-blue': '#00f3ff',
+                        'neon-pink': '#ff00ff',
+                        'neon-red': '#ff003c',
+                        'neon-purple': '#b829dd',
+                        'electric-blue': '#0052ff',
+                    },
+                    fontFamily: {
+                        'orbitron': ['Orbitron', 'sans-serif'],
+                        'rajdhani': ['Rajdhani', 'sans-serif'],
+                        'syncopate': ['Syncopate', 'sans-serif'],
+                    },
+                    animation: {
+                        'pulse-fast': 'pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'spin-slow': 'spin 8s linear infinite',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: #050508; color: #ffffff; font-family: 'Rajdhani', sans-serif; overflow-x: hidden; cursor: none; }
+        
+        .cursor { width: 20px; height: 20px; border: 2px solid #00f3ff; border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; transition: transform 0.1s; mix-blend-mode: difference; }
+        .cursor-follower { width: 40px; height: 40px; background: radial-gradient(circle, rgba(0,243,255,0.3) 0%, transparent 70%); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9998; transition: transform 0.3s ease-out; }
+        
+        .glitch { position: relative; animation: glitch-skew 4s infinite; }
+        .glitch::before, .glitch::after { content: attr(data-text); position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+        .glitch::before { animation: glitch-1 2s infinite; color: #00f3ff; text-shadow: 2px 0 #00f3ff; clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%); }
+        .glitch::after { animation: glitch-2 2s infinite; color: #ff00ff; text-shadow: -2px 0 #ff00ff; clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%); }
+        @keyframes glitch-1 { 0%, 100% { transform: translate(0); } 20% { transform: translate(-3px, 3px); } 40% { transform: translate(-3px, -3px); } 60% { transform: translate(3px, 3px); } 80% { transform: translate(3px, -3px); } }
+        @keyframes glitch-2 { 0%, 100% { transform: translate(0); } 20% { transform: translate(3px, -3px); } 40% { transform: translate(3px, 3px); } 60% { transform: translate(-3px, -3px); } 80% { transform: translate(-3px, 3px); } }
+        @keyframes glitch-skew { 0%, 100% { transform: skew(0deg); } 10% { transform: skew(-2deg); } 20% { transform: skew(2deg); } 30% { transform: skew(0deg); } }
+        
+        /* ===== PREMIUM CRT HERO TITLE EFFECTS ===== */
+        .crt-power-on { animation: crt-power-on 1.6s cubic-bezier(0.19, 1, 0.22, 1) both; transform-origin: center; }
+        @keyframes crt-power-on {
+            0% { opacity: 0; transform: scaleY(0.015) scaleX(1.15); filter: brightness(25) blur(1px); }
+            6% { opacity: 1; transform: scaleY(0.015) scaleX(1.15); filter: brightness(25) blur(1px); }
+            12% { transform: scaleY(1) scaleX(0.92); filter: brightness(4) blur(0px); }
+            18% { transform: scaleY(0.94) scaleX(1.02); filter: brightness(1.4); }
+            24% { transform: scaleY(1) scaleX(1); filter: brightness(1); }
+            100% { opacity: 1; transform: scale(1); filter: brightness(1); }
+        }
+
+        .chroma-title { position: relative; display: inline-block; }
+        .chroma-title::before, .chroma-title::after { content: attr(data-text); position: absolute; top: 0; left: 0; width: 100%; height: 100%; mix-blend-mode: screen; opacity: 0.65; pointer-events: none; }
+        .chroma-title::before { color: #00f3ff; animation: chroma-drift-a 7s ease-in-out infinite; }
+        .chroma-title::after { color: #ff003c; animation: chroma-drift-b 7s ease-in-out infinite; }
+        @keyframes chroma-drift-a { 0%, 100% { transform: translate(-1.5px, 0); } 50% { transform: translate(-0.4px, 0.8px); } }
+        @keyframes chroma-drift-b { 0%, 100% { transform: translate(1.5px, 0); } 50% { transform: translate(0.4px, -0.8px); } }
+
+        .crt-scan-sweep { position: relative; overflow: hidden; }
+        .crt-scan-sweep::after { content: ''; position: absolute; top: 0; left: -160%; width: 55%; height: 100%; background: linear-gradient(100deg, transparent, rgba(255,255,255,0.55), transparent); mix-blend-mode: overlay; animation: scan-sweep 5.5s ease-in-out infinite; }
+        @keyframes scan-sweep { 0% { left: -160%; } 45%, 100% { left: 160%; } }
+
+        .holo-gradient-text { background: linear-gradient(110deg, #00f3ff 0%, #b829dd 22%, #ff00ff 45%, #0052ff 68%, #00f3ff 100%); background-size: 300% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: holo-shift 7s linear infinite, title-flicker 5s infinite; filter: drop-shadow(0 0 25px rgba(0,243,255,0.55)) drop-shadow(0 0 55px rgba(255,0,255,0.35)); }
+        @keyframes holo-shift { 0% { background-position: 0% 50%; } 100% { background-position: 300% 50%; } }
+        @keyframes title-flicker { 0%, 19%, 21%, 23%, 80%, 100% { opacity: 1; } 20%, 22% { opacity: 0.86; } 79%, 81% { opacity: 0.92; } }
+
+        .neon-text-blue { text-shadow: 0 0 10px #00f3ff, 0 0 20px #00f3ff, 0 0 40px #00f3ff, 0 0 80px #00f3ff; }
+        .neon-text-pink { text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff, 0 0 40px #ff00ff, 0 0 80px #ff00ff; }
+        .neon-box { box-shadow: 0 0 20px rgba(0, 243, 255, 0.5), inset 0 0 20px rgba(0, 243, 255, 0.2); border: 1px solid #00f3ff; }
+        
+        .float-cyber { animation: float-cyber 6s ease-in-out infinite; }
+        @keyframes float-cyber { 0%, 100% { transform: translateY(0px) rotate(0deg); } 25% { transform: translateY(-15px) rotate(1deg); } 50% { transform: translateY(0px) rotate(0deg); } 75% { transform: translateY(15px) rotate(-1deg); } }
+        
+        .cyber-grid { background-image: linear-gradient(rgba(0, 243, 255, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 243, 255, 0.1) 1px, transparent 1px); background-size: 50px 50px; perspective: 1000px; transform-style: preserve-3d; animation: grid-move 20s linear infinite; }
+        @keyframes grid-move { 0% { transform: translateY(0); } 100% { transform: translateY(50px); } }
+        
+        .scanlines { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.1)); background-size: 100% 4px; pointer-events: none; z-index: 9990; opacity: 0.3; }
+        
+        .glass-ultra { background: rgba(18, 18, 26, 0.6); backdrop-filter: blur(20px) saturate(180%); border: 1px solid rgba(0, 243, 255, 0.2); box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37); }
+        
+        .section-reveal { opacity: 0; transform: translateY(100px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
+        .section-reveal.active { opacity: 1; transform: translateY(0); }
+        
+        .card-cyber { transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); position: relative; overflow: hidden; }
+        .card-cyber::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(0, 243, 255, 0.2), transparent); transition: left 0.5s; }
+        .card-cyber:hover::before { left: 100%; }
+        .card-cyber:hover { transform: translateY(-20px) scale(1.02); box-shadow: 0 30px 60px rgba(0, 243, 255, 0.3); }
+        
+        .progress-bar { position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(90deg, #00f3ff, #ff00ff); z-index: 10000; transition: width 0.1s; }
+        
+        .particle { position: absolute; background: #00f3ff; border-radius: 50%; pointer-events: none; animation: particle-float 10s infinite; }
+        @keyframes particle-float { 0%, 100% { transform: translateY(0) translateX(0); opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { transform: translateY(-100vh) translateX(50px); opacity: 0; } }
+        
+        .btn-cyber { position: relative; overflow: hidden; transition: all 0.3s; clip-path: polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%); }
+        .btn-cyber::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent); transition: left 0.5s; }
+        .btn-cyber:hover::before { left: 100%; }
+        .btn-cyber:hover { transform: scale(1.05); box-shadow: 0 0 40px rgba(0, 243, 255, 0.6); }
+        
+        .navbar-neo { position: relative; background-color: #0a0a0f; box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.9), 5px 5px 20px rgba(0, 0, 0, 0.8), -6px -6px 20px rgba(0, 243, 255, 0.15), -3px -3px 10px rgba(255, 255, 255, 0.1), inset 0 2px 0 rgba(255, 255, 255, 0.15), inset 0 -2px 0 rgba(0, 0, 0, 0.6); border-bottom: 2px solid rgba(0, 243, 255, 0.2); backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); overflow: hidden; }
+        .navbar-neo::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: url('barra navegadora.png'); background-size: cover; background-position: center; background-repeat: no-repeat; opacity: 0.25; z-index: 0; pointer-events: none; filter: contrast(1.1) brightness(0.9); }
+        .navbar-neo::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(180deg, rgba(10, 10, 15, 0.3) 0%, rgba(10, 10, 15, 0.7) 50%, rgba(10, 10, 15, 0.9) 100%); z-index: 0; pointer-events: none; }
+        .navbar-neo > * { position: relative; z-index: 1; }
+        .navbar-neo.scrolled { box-shadow: 15px 15px 40px rgba(0, 0, 0, 0.95), 8px 8px 25px rgba(0, 0, 0, 0.85), -8px -8px 25px rgba(0, 243, 255, 0.2), -4px -4px 15px rgba(255, 255, 255, 0.15), inset 0 3px 0 rgba(255, 255, 255, 0.2), inset 0 -3px 0 rgba(0, 0, 0, 0.7); border-bottom: 2px solid rgba(0, 243, 255, 0.3); }
+        
+        .navbar-logo-container { position: relative; width: 320px; height: 100px; flex-shrink: 0; overflow: visible; }
+        .navbar-logo-container img { width: 100%; height: 100%; object-fit: contain; object-position: center; filter: drop-shadow(0 4px 12px rgba(0, 243, 255, 0.4)); }
+        
+        .nav-link-neo { position: relative; padding: 14px 32px; border-radius: 9999px; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0.3) 100%); box-shadow: 6px 6px 15px rgba(0, 0, 0, 0.7), -6px -6px 15px rgba(0, 243, 255, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.15); border: 1px solid rgba(0, 243, 255, 0.15); font-weight: 700; }
+        .nav-link-neo:hover { background: linear-gradient(145deg, rgba(0, 243, 255, 0.15) 0%, rgba(0, 0, 0, 0.4) 100%); box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.75), -8px -8px 20px rgba(0, 243, 255, 0.2), inset 0 2px 0 rgba(255, 255, 255, 0.2); color: #00f3ff !important; transform: translateY(-3px); border-color: rgba(0, 243, 255, 0.4); }
+        
+        .btn-cart-neo { padding: 16px 40px; border-radius: 9999px; background: linear-gradient(145deg, #0052ff 0%, #003dbf 100%); box-shadow: 10px 10px 25px rgba(0, 0, 0, 0.8), -10px -10px 25px rgba(0, 243, 255, 0.2), inset 0 2px 0 rgba(255, 255, 255, 0.3), inset 0 -2px 0 rgba(0, 0, 0, 0.4); border: 2px solid rgba(0, 243, 255, 0.4); transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); font-weight: 700; }
+        .btn-cart-neo:hover { transform: translateY(-4px); box-shadow: 12px 12px 30px rgba(0, 0, 0, 0.85), -12px -12px 30px rgba(0, 243, 255, 0.25), inset 0 2px 0 rgba(255, 255, 255, 0.35), 0 0 40px rgba(0, 243, 255, 0.6); border-color: rgba(0, 243, 255, 0.6); }
+        .btn-cart-neo:active { transform: translateY(0); box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.7), -4px -4px 12px rgba(0, 243, 255, 0.1), inset 0 3px 6px rgba(0, 0, 0, 0.5); }
+        
+        .navbar-neon-line { position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, transparent 0%, #00f3ff 20%, #ff00ff 50%, #00f3ff 80%, transparent 100%); opacity: 0.7; z-index: 2; animation: neon-line-pulse 3s ease-in-out infinite; }
+        @keyframes neon-line-pulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 0.9; } }
+        
+        .cube-container { perspective: 2000px; width: 100%; height: 600px; display: flex; justify-content: center; align-items: center; position: relative; }
+        .cube { width: 350px; height: 450px; position: relative; transform-style: preserve-3d; transition: transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .cube-face { position: absolute; width: 350px; height: 450px; background: rgba(18, 18, 26, 0.95); border: 2px solid rgba(0, 243, 255, 0.3); border-radius: 20px; overflow: hidden; box-shadow: 0 0 30px rgba(0, 243, 255, 0.3), inset 0 0 30px rgba(0, 243, 255, 0.1); backdrop-filter: blur(10px); }
+        .cube-face-image-container { width: 100%; height: 300px; background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 100%); display: flex; align-items: center; justify-content: center; padding: 20px; overflow: hidden; }
+        .cube-face-image-container img { width: 100%; height: 100%; object-fit: contain; object-position: center; transition: transform 0.5s ease; }
+        .cube-face:hover .cube-face-image-container img { transform: scale(1.1); }
+        .cube-face-content { padding: 20px; }
+        .cube-face-front { transform: rotateY(0deg) translateZ(175px); }
+        .cube-face-back { transform: rotateY(180deg) translateZ(175px); }
+        .cube-face-right { transform: rotateY(90deg) translateZ(175px); }
+        .cube-face-left { transform: rotateY(-90deg) translateZ(175px); }
+        .cube-face-top { transform: rotateX(90deg) translateZ(225px); }
+        .cube-face-bottom { transform: rotateX(-90deg) translateZ(225px); }
+        .cube-controls { position: absolute; bottom: -80px; left: 50%; transform: translateX(-50%); display: flex; gap: 20px; z-index: 10; }
+        .cube-btn { width: 60px; height: 60px; border: 2px solid #00f3ff; background: rgba(0, 243, 255, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s; font-size: 24px; color: #00f3ff; }
+        .cube-btn:hover { background: rgba(0, 243, 255, 0.3); box-shadow: 0 0 30px rgba(0, 243, 255, 0.6); transform: scale(1.1); }
+        .cube-indicators { position: absolute; bottom: -120px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; }
+        .cube-indicator { width: 12px; height: 12px; border-radius: 50%; background: rgba(0, 243, 255, 0.3); cursor: pointer; transition: all 0.3s; }
+        .cube-indicator.active { background: #00f3ff; box-shadow: 0 0 20px rgba(0, 243, 255, 0.8); transform: scale(1.3); }
+        
+        /* Chatbot Styles */
+        .chat-window {
+            position: fixed;
+            bottom: 100px;
+            right: 32px;
+            width: 360px;
+            height: 500px;
+            z-index: 9998;
+            display: none;
+            flex-direction: column;
+            border-radius: 20px;
+            overflow: hidden;
+            animation: slideUp 0.3s ease-out;
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .chat-messages::-webkit-scrollbar { width: 6px; }
+        .chat-messages::-webkit-scrollbar-thumb { background: #00f3ff; border-radius: 3px; }
+        .message {
+            max-width: 85%;
+            padding: 10px 14px;
+            border-radius: 16px;
+            font-size: 14px;
+            line-height: 1.4;
+            animation: fadeIn 0.3s ease;
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .message.bot {
+            background: rgba(0, 243, 255, 0.1);
+            border: 1px solid rgba(0, 243, 255, 0.3);
+            color: #ffffff;
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+        }
+        .message.user {
+            background: linear-gradient(135deg, #0052ff, #003dbf);
+            color: #ffffff;
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+        .chat-options {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 8px;
+        }
+        .chat-option-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(0, 243, 255, 0.3);
+            color: #00f3ff;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: left;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        .chat-option-btn:hover {
+            background: rgba(0, 243, 255, 0.2);
+            border-color: #00f3ff;
+        }
+        .chat-input-area {
+            padding: 12px;
+            border-top: 1px solid rgba(0, 243, 255, 0.2);
+            display: flex;
+            gap: 8px;
+            background: rgba(10, 10, 15, 0.8);
+        }
+        .chat-input {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(0, 243, 255, 0.2);
+            border-radius: 20px;
+            padding: 8px 16px;
+            color: white;
+            font-family: 'Rajdhani', sans-serif;
+            outline: none;
+        }
+        .chat-input:focus { border-color: #00f3ff; }
+        .chat-send-btn {
+            background: #00f3ff;
+            color: #000;
+            border: none;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .chat-send-btn:hover { transform: scale(1.1); }
+        
+        @media (max-width: 768px) {
+            body { cursor: auto; } .cursor, .cursor-follower { display: none; }
+            .cube { width: 280px; height: 380px; } .cube-face { width: 280px; height: 380px; } .cube-face-image-container { height: 240px; }
+            .cube-face-front { transform: rotateY(0deg) translateZ(140px); } .cube-face-back { transform: rotateY(180deg) translateZ(140px); }
+            .cube-face-right { transform: rotateY(90deg) translateZ(140px); } .cube-face-left { transform: rotateY(-90deg) translateZ(140px); }
+            .navbar-logo-container { width: 220px; height: 70px; } .nav-link-neo { padding: 12px 20px; font-size: 14px; } .btn-cart-neo { padding: 12px 24px; font-size: 12px; }
+            .chat-window { width: calc(100% - 32px); right: 16px; bottom: 90px; height: 450px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="cursor hidden md:block"></div>
+    <div class="cursor-follower hidden md:block"></div>
+    <div class="progress-bar" id="progressBar"></div>
+    <div class="scanlines"></div>
+    
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 navbar-neo" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-24">
+                <div class="navbar-logo-container">
+                    <img src="logotipo2.png" alt="VJ Coqui Logo">
+                </div>
+                <div class="hidden lg:flex items-center space-x-4">
+                    <a href="#consolas" class="nav-link-neo text-white">CONSOLAS</a>
+                    <a href="#juegos" class="nav-link-neo text-white">JUEGOS</a>
+                    <a href="#retro" class="nav-link-neo text-white">RETRO</a>
+                    <a href="#sucursales" class="nav-link-neo text-white">SUCURSALES</a>
+                    <a href="#arcade" class="btn-cart-neo text-white" style="display:inline-block; text-decoration:none;">🎮 JUGAR ARCADE</a>
+                </div>
+                <button class="lg:hidden text-white p-2" onclick="toggleMenu()">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                </button>
+            </div>
+        </div>
+        <div class="navbar-neon-line"></div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="relative min-h-screen flex items-center justify-center overflow-hidden cyber-grid" id="inicio">
+        <div id="particles" class="absolute inset-0"></div>
+        <div class="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-neon-blue/20 rounded-full blur-[120px] animate-pulse-fast"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-neon-pink/20 rounded-full blur-[120px] animate-pulse-fast" style="animation-delay: 1s;"></div>
+        
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div class="space-y-8">
+                    <div class="inline-block px-6 py-3 glass-ultra rounded-full border border-neon-blue/50">
+                        <span class="font-orbitron text-neon-blue font-bold tracking-widest text-sm">[ SISTEMA INICIADO // 1998 ]</span>
+                    </div>
+                    <h1 class="font-syncopate font-bold text-4xl lg:text-6xl leading-[1.05] crt-power-on">
+                        <span class="block text-white chroma-title crt-scan-sweep" data-text="DESPIERTA AL">DESPIERTA AL</span>
+                        <span class="block holo-gradient-text mt-1">GAMER QUE LLEVAS DENTRO</span>
+                        <span class="block text-white text-2xl lg:text-4xl mt-3">RETRO Y NEXT-GEN<br>EN UN SOLO LUGAR</span>
+                    </h1>
+                    <p class="font-rajdhani text-2xl text-gray-300 font-medium max-w-xl">
+                        <span class="text-neon-blue font-bold">28 años</span> de experiencia, <span class="text-neon-pink font-bold">11 sucursales</span> y más de <span class="text-neon-blue font-bold">19,000 productos</span> listos para ti.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-6 pt-6">
+                        <button class="btn-cyber bg-gradient-to-r from-neon-blue to-electric-blue px-10 py-5 font-orbitron font-bold text-lg text-black relative group"><span class="relative z-10">EXPLORAR CATÁLOGO →</span></button>
+                        <button class="btn-cyber border-2 border-neon-pink px-10 py-5 font-orbitron font-bold text-lg text-white hover:bg-neon-pink/20">← VER PREVENTAS</button>
+                    </div>
+                    <div class="grid grid-cols-3 gap-8 pt-12 border-t border-white/10">
+                        <div class="text-center group"><div class="font-syncopate font-black text-5xl text-neon-blue group-hover:neon-text-blue transition-all">28</div><div class="text-sm text-gray-400 font-rajdhani mt-2">AÑOS</div></div>
+                        <div class="text-center group"><div class="font-syncopate font-black text-5xl text-neon-pink group-hover:neon-text-pink transition-all">11</div><div class="text-sm text-gray-400 font-rajdhani mt-2">SUCURSALES</div></div>
+                        <div class="text-center group"><div class="font-syncopate font-black text-5xl text-neon-blue group-hover:neon-text-blue transition-all">19K+</div><div class="text-sm text-gray-400 font-rajdhani mt-2">PRODUCTOS</div></div>
+                    </div>
+                </div>
+                <div class="relative flex justify-center items-center">
+                    <div class="absolute inset-0 bg-gradient-to-r from-neon-blue/30 to-neon-pink/30 rounded-full blur-[100px] animate-pulse"></div>
+                    <div class="relative float-cyber">
+                        <div class="absolute inset-0 bg-neon-blue/50 blur-3xl rounded-full"></div>
+                        <img src="cassette gris.png" alt="Video Juegos Coqui Retro Cartridge" class="relative w-full max-w-xl drop-shadow-2xl" style="filter: drop-shadow(0 0 40px rgba(0, 243, 255, 0.6)) drop-shadow(0 0 80px rgba(255, 0, 255, 0.4));">
+                    </div>
+                    <div class="absolute -top-20 -right-20 w-40 h-40 border-2 border-neon-blue/30 rounded-full animate-spin-slow"></div>
+                    <div class="absolute -bottom-20 -left-20 w-32 h-32 border-2 border-neon-pink/30 rounded-full animate-spin-slow" style="animation-direction: reverse;"></div>
+                    <div class="absolute top-10 right-10 glass-ultra px-4 py-3 rounded-lg border border-neon-blue/50"><div class="text-neon-blue font-orbitron font-bold">RETRO</div><div class="text-xs text-gray-400">Since 1998</div></div>
+                    <div class="absolute bottom-20 left-10 glass-ultra px-4 py-3 rounded-lg border border-neon-pink/50"><div class="text-neon-pink font-orbitron font-bold">NEXT-GEN</div><div class="text-xs text-gray-400">PS5 | Xbox X</div></div>
+                </div>
+            </div>
+        </div>
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <svg class="w-8 h-8 text-neon-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+        </div>
+    </section>
+
+    <!-- CHAPTER 2: The Legacy -->
+    <section class="relative py-40 bg-cyber-dark overflow-hidden section-reveal" id="legacy">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-20">
+                <h2 class="font-syncopate font-bold text-5xl lg:text-7xl mb-6"><span class="text-transparent bg-clip-text bg-gradient-to-r from-neon-blue to-neon-pink">NUESTRO LEGADO</span></h2>
+                <p class="font-rajdhani text-2xl text-gray-400 max-w-3xl mx-auto">Dos décadas y media conectando gamers con sus mejores experiencias. Desde los cartuchos retro hasta la última generación.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="glass-ultra p-8 rounded-2xl card-cyber border border-white/10">
+                    <div class="text-6xl font-syncopate font-bold text-neon-blue mb-4">1998</div>
+                    <h3 class="font-orbitron font-bold text-2xl mb-4">EL INICIO</h3>
+                    <p class="text-gray-400 font-rajdhani text-lg">Comenzamos la revolución gamer en Costa Rica. Los primeros en traer lo mejor del mundo de los videojuegos.</p>
+                </div>
+                <div class="glass-ultra p-8 rounded-2xl card-cyber border border-white/10">
+                    <div class="text-6xl font-syncopate font-bold text-neon-pink mb-4">2026</div>
+                    <h3 class="font-orbitron font-bold text-2xl mb-4">LA EVOLUCIÓN</h3>
+                    <p class="text-gray-400 font-rajdhani text-lg">11 sucursales, miles de productos y una comunidad que crece cada día. Seguimos liderando el mercado.</p>
+                </div>
+                <div class="glass-ultra p-8 rounded-2xl card-cyber border border-white/10">
+                    <div class="text-6xl font-syncopate font-bold text-neon-blue mb-4">FUTURO</div>
+                    <h3 class="font-orbitron font-bold text-2xl mb-4">NEXT LEVEL</h3>
+                    <p class="text-gray-400 font-rajdhani text-lg">Preparados para la siguiente generación. Realidad virtual, cloud gaming y más.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SOBRE NOSOTROS -->
+    <section class="relative py-40 bg-cyber-black overflow-hidden section-reveal" id="nosotros">
+        <div class="absolute inset-0 cyber-grid opacity-30"></div>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="font-syncopate font-bold text-5xl lg:text-6xl mb-6"><span class="text-transparent bg-clip-text bg-gradient-to-r from-neon-blue to-neon-pink">SOBRE NOSOTROS</span></h2>
+                <p class="font-rajdhani text-2xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
+                    Somos una empresa con más de <span class="text-neon-blue font-bold">27 años de experiencia</span> en el mercado de los videojuegos, líderes en videojuegos de nueva y vieja generación en Costa Rica.
+                </p>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <div class="glass-ultra p-10 rounded-3xl card-cyber border border-white/10">
+                    <div class="flex items-center mb-6">
+                        <div class="w-16 h-16 bg-gradient-to-br from-neon-blue to-electric-blue rounded-2xl flex items-center justify-center mr-4">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                        </div>
+                        <h3 class="font-orbitron font-bold text-3xl text-neon-blue">VISIÓN</h3>
+                    </div>
+                    <p class="text-gray-300 font-rajdhani text-lg leading-relaxed">Ser una empresa de reconocido prestigio a nivel nacional, con autonomía administrativa y una garantía sólida y confiable, ofreciendo productos de alta calidad.</p>
+                    <p class="text-gray-300 font-rajdhani text-lg leading-relaxed mt-4">Nos enfocamos en el mejoramiento continuo en todas nuestras áreas, manteniendo un alto nivel de compromiso con el servicio al cliente y promoviendo la formación integral de nuestro personal.</p>
+                </div>
+                <div class="glass-ultra p-10 rounded-3xl card-cyber border border-white/10">
+                    <div class="flex items-center mb-6">
+                        <div class="w-16 h-16 bg-gradient-to-br from-neon-pink to-neon-purple rounded-2xl flex items-center justify-center mr-4">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                        </div>
+                        <h3 class="font-orbitron font-bold text-3xl text-neon-pink">MISIÓN</h3>
+                    </div>
+                    <p class="text-gray-300 font-rajdhani text-lg leading-relaxed">Ser una empresa que cumpla con las necesidades de nuestros clientes y colaboradores, ofreciendo la mejor y más amplia variedad de videojuegos para todos los gustos, tanto de última tecnología como retro.</p>
+                    <p class="text-gray-300 font-rajdhani text-lg leading-relaxed mt-4">Nos comprometemos a brindar productos confiables, una excelente garantía y un trato cercano y respetuoso, dando siempre lo mejor de nosotros para asegurar una experiencia de compra satisfactoria.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ESTADÍSTICAS -->
+    <section class="relative py-20 bg-cyber-dark overflow-hidden section-reveal">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="glass-ultra p-8 rounded-3xl text-center card-cyber border border-neon-blue/30">
+                    <div class="font-syncopate font-black text-6xl text-neon-blue mb-4">19,113</div>
+                    <div class="font-rajdhani font-bold text-xl text-gray-300">Productos en Catálogo</div>
+                </div>
+                <div class="glass-ultra p-8 rounded-3xl text-center card-cyber border border-neon-pink/30">
+                    <div class="font-syncopate font-black text-6xl text-neon-pink mb-4">11</div>
+                    <div class="font-rajdhani font-bold text-xl text-gray-300">Sucursales Atendiendo</div>
+                </div>
+                <div class="glass-ultra p-8 rounded-3xl text-center card-cyber border border-neon-purple/30">
+                    <div class="font-syncopate font-black text-6xl text-neon-purple mb-4">3</div>
+                    <div class="font-rajdhani font-bold text-xl text-gray-300">Marcas Disponibles</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CATEGORÍAS QUE MANEJAMOS -->
+    <section class="relative py-40 bg-cyber-black overflow-hidden section-reveal" id="categorias">
+        <div class="absolute inset-0 cyber-grid opacity-30"></div>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="font-syncopate font-bold text-5xl lg:text-6xl mb-6"><span class="text-neon-blue neon-text-blue">CATEGORÍAS</span> <span class="text-white">QUE MANEJAMOS</span></h2>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+                <div class="glass-ultra p-6 rounded-2xl text-center card-cyber border border-white/10 hover:border-neon-blue/50"><div class="text-4xl mb-3">🎮</div><div class="font-rajdhani font-bold text-lg">Juego Usado</div></div>
+                <div class="glass-ultra p-6 rounded-2xl text-center card-cyber border border-white/10 hover:border-neon-blue/50"><div class="text-4xl mb-3">💿</div><div class="font-rajdhani font-bold text-lg">Juegos</div></div>
+                <div class="glass-ultra p-6 rounded-2xl text-center card-cyber border border-white/10 hover:border-neon-blue/50"><div class="text-4xl mb-3">🎯</div><div class="font-rajdhani font-bold text-lg">Controles</div></div>
+                <div class="glass-ultra p-6 rounded-2xl text-center card-cyber border border-white/10 hover:border-neon-blue/50"><div class="text-4xl mb-3">🕹️</div><div class="font-rajdhani font-bold text-lg">Maquina Usada</div></div>
+                <div class="glass-ultra p-6 rounded-2xl text-center card-cyber border border-white/10 hover:border-neon-blue/50"><div class="text-4xl mb-3">📦</div><div class="font-rajdhani font-bold text-lg">Otros</div></div>
+                <div class="glass-ultra p-6 rounded-2xl text-center card-cyber border border-white/10 hover:border-neon-blue/50"><div class="text-4xl mb-3">👾</div><div class="font-rajdhani font-bold text-lg">Amiibo Usado</div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CHAPTER 3: The Arsenal (3D Cube Gallery) -->
+    <section class="relative py-40 bg-cyber-dark overflow-hidden section-reveal" id="juegos">
+        <div class="absolute inset-0 cyber-grid opacity-30"></div>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="font-syncopate font-bold text-5xl lg:text-7xl mb-4"><span class="text-neon-blue neon-text-blue">ARSENAL</span> <span class="text-white">GAMER</span></h2>
+                <p class="font-rajdhani text-2xl text-gray-400">Equipamiento de élite para jugadores de élite</p>
+            </div>
+            <div class="cube-container">
+                <div class="cube" id="productCube">
+                    <div class="cube-face cube-face-front">
+                        <div class="cube-face-image-container"><img src="play station.png" alt="PlayStation 5"></div>
+                        <div class="cube-face-content">
+                            <div class="flex items-center justify-between mb-2"><span class="text-neon-blue font-orbitron text-xs font-bold">NEW GEN</span><span class="text-green-400 font-orbitron text-xs">✓ STOCK</span></div>
+                            <h3 class="font-rajdhani font-bold text-2xl mb-2">PlayStation 5 Digital</h3>
+                            <p class="text-gray-400 text-sm mb-4">Potencia sin límites</p>
+                            <div class="flex items-center justify-between"><span class="font-syncopate font-bold text-2xl text-neon-blue">₡389,999</span><button class="btn-cyber bg-neon-blue px-4 py-2 font-rajdhani font-bold text-black text-sm">+ AGREGAR</button></div>
+                        </div>
+                    </div>
+                    <div class="cube-face cube-face-right">
+                        <div class="cube-face-image-container"><img src="controles.png" alt="Controles Gaming"></div>
+                        <div class="cube-face-content">
+                            <div class="flex items-center justify-between mb-2"><span class="text-neon-pink font-orbitron text-xs font-bold">RGB</span><span class="text-green-400 font-orbitron text-xs">✓ STOCK</span></div>
+                            <h3 class="font-rajdhani font-bold text-2xl mb-2">DualSense Edge Pro</h3>
+                            <p class="text-gray-400 text-sm mb-4">Control profesional</p>
+                            <div class="flex items-center justify-between"><span class="font-syncopate font-bold text-2xl text-neon-blue">₡129,999</span><button class="btn-cyber bg-neon-blue px-4 py-2 font-rajdhani font-bold text-black text-sm">+ AGREGAR</button></div>
+                        </div>
+                    </div>
+                    <div class="cube-face cube-face-back">
+                        <div class="cube-face-image-container"><img src="xbox.png" alt="Xbox Series X"></div>
+                        <div class="cube-face-content">
+                            <div class="flex items-center justify-between mb-2"><span class="text-green-500 font-orbitron text-xs font-bold">XBOX</span><span class="text-orange-400 font-orbitron text-xs">⚡ POCAS</span></div>
+                            <h3 class="font-rajdhani font-bold text-2xl mb-2">Xbox Series X</h3>
+                            <p class="text-gray-400 text-sm mb-4">12 Teraflops de poder</p>
+                            <div class="flex items-center justify-between"><span class="font-syncopate font-bold text-2xl text-neon-blue">₡449,999</span><button class="btn-cyber bg-neon-blue px-4 py-2 font-rajdhani font-bold text-black text-sm">+ AGREGAR</button></div>
+                        </div>
+                    </div>
+                    <div class="cube-face cube-face-left">
+                        <div class="cube-face-image-container"><img src="nitendo switch.png" alt="Nintendo Switch"></div>
+                        <div class="cube-face-content">
+                            <div class="flex items-center justify-between mb-2"><span class="text-red-500 font-orbitron text-xs font-bold">NINTENDO</span><span class="text-green-400 font-orbitron text-xs">✓ STOCK</span></div>
+                            <h3 class="font-rajdhani font-bold text-2xl mb-2">Switch OLED</h3>
+                            <p class="text-gray-400 text-sm mb-4">Gaming portátil premium</p>
+                            <div class="flex items-center justify-between"><span class="font-syncopate font-bold text-2xl text-neon-blue">₡219,999</span><button class="btn-cyber bg-neon-blue px-4 py-2 font-rajdhani font-bold text-black text-sm">+ AGREGAR</button></div>
+                        </div>
+                    </div>
+                    <div class="cube-face cube-face-top">
+                        <div class="cube-face-image-container"><img src="gameboy.png" alt="GameBoy Retro"></div>
+                        <div class="cube-face-content">
+                            <div class="flex items-center justify-between mb-2"><span class="text-neon-purple font-orbitron text-xs font-bold">RETRO</span><span class="text-orange-400 font-orbitron text-xs">⚡ LIMITED</span></div>
+                            <h3 class="font-rajdhani font-bold text-2xl mb-2">Colección Retro</h3>
+                            <p class="text-gray-400 text-sm mb-4">Clásicos atemporales</p>
+                            <div class="flex items-center justify-between"><span class="font-syncopate font-bold text-2xl text-neon-blue">₡29,999</span><button class="btn-cyber bg-neon-blue px-4 py-2 font-rajdhani font-bold text-black text-sm">+ AGREGAR</button></div>
+                        </div>
+                    </div>
+                    <div class="cube-face cube-face-bottom">
+                        <div class="cube-face-image-container"><img src="control gamer.png" alt="Control Gamer Pro"></div>
+                        <div class="cube-face-content">
+                            <div class="flex items-center justify-between mb-2"><span class="text-neon-blue font-orbitron text-xs font-bold">PRO</span><span class="text-green-400 font-orbitron text-xs">✓ STOCK</span></div>
+                            <h3 class="font-rajdhani font-bold text-2xl mb-2">Control Gamer Pro</h3>
+                            <p class="text-gray-400 text-sm mb-4">Precisión competitiva</p>
+                            <div class="flex items-center justify-between"><span class="font-syncopate font-bold text-2xl text-neon-blue">₡89,999</span><button class="btn-cyber bg-neon-blue px-4 py-2 font-rajdhani font-bold text-black text-sm">+ AGREGAR</button></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="cube-controls">
+                    <button class="cube-btn" onclick="rotateCube('prev')">←</button>
+                    <button class="cube-btn" onclick="toggleAutoRotate()">⏯</button>
+                    <button class="cube-btn" onclick="rotateCube('next')">→</button>
+                </div>
+                <div class="cube-indicators">
+                    <div class="cube-indicator active" onclick="goToFace(0)"></div>
+                    <div class="cube-indicator" onclick="goToFace(1)"></div>
+                    <div class="cube-indicator" onclick="goToFace(2)"></div>
+                    <div class="cube-indicator" onclick="goToFace(3)"></div>
+                    <div class="cube-indicator" onclick="goToFace(4)"></div>
+                    <div class="cube-indicator" onclick="goToFace(5)"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CATÁLOGO -->
+    <section class="relative py-40 bg-cyber-black overflow-hidden section-reveal" id="catalogo">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="font-syncopate font-bold text-5xl lg:text-6xl mb-6"><span class="text-transparent bg-clip-text bg-gradient-to-r from-neon-blue to-neon-pink">CATÁLOGO</span></h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="glass-ultra p-10 rounded-3xl text-center card-cyber border border-neon-blue/30">
+                    <div class="text-6xl mb-4">⭐</div>
+                    <h3 class="font-orbitron font-bold text-2xl text-neon-blue mb-4">Artículos Destacados</h3>
+                    <p class="text-gray-300 font-rajdhani text-lg">Lo mejor seleccionado para ti</p>
+                </div>
+                <div class="glass-ultra p-10 rounded-3xl text-center card-cyber border border-neon-pink/30">
+                    <div class="text-6xl mb-4">🔥</div>
+                    <h3 class="font-orbitron font-bold text-2xl text-neon-pink mb-4">Promociones</h3>
+                    <p class="text-gray-300 font-rajdhani text-lg">Ofertas especiales del mes</p>
+                </div>
+                <div class="glass-ultra p-10 rounded-3xl text-center card-cyber border border-neon-purple/30">
+                    <div class="text-6xl mb-4">🆕</div>
+                    <h3 class="font-orbitron font-bold text-2xl text-neon-purple mb-4">Novedades</h3>
+                    <p class="text-gray-300 font-rajdhani text-lg">Lo último en videojuegos</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SOPORTE -->
+    <section class="relative py-40 bg-cyber-dark overflow-hidden section-reveal" id="soporte">
+        <div class="absolute inset-0 cyber-grid opacity-30"></div>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="font-syncopate font-bold text-5xl lg:text-6xl mb-6"><span class="text-neon-blue neon-text-blue">SOPORTE</span></h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="glass-ultra p-10 rounded-3xl card-cyber border border-white/10">
+                    <div class="flex items-center mb-6">
+                        <div class="w-14 h-14 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl flex items-center justify-center mr-4">
+                            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        </div>
+                        <h3 class="font-orbitron font-bold text-2xl text-green-400">Comprobantes Electrónicos</h3>
+                    </div>
+                    <p class="text-gray-300 font-rajdhani text-lg">Facturación electrónica y comprobantes digitales</p>
+                </div>
+                <div class="glass-ultra p-10 rounded-3xl card-cyber border border-white/10">
+                    <div class="flex items-center mb-6">
+                        <div class="w-14 h-14 bg-gradient-to-br from-neon-blue to-electric-blue rounded-xl flex items-center justify-center mr-4">
+                            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                        </div>
+                        <h3 class="font-orbitron font-bold text-2xl text-neon-blue">Consultar Reparación</h3>
+                    </div>
+                    <p class="text-gray-300 font-rajdhani text-lg">Estado de tus equipos en reparación</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- COQUI ARCADE: Fidelización de Clientes -->
+    <section class="relative py-40 bg-cyber-dark overflow-hidden section-reveal" id="arcade">
+        <div class="cyber-grid absolute inset-0 opacity-30"></div>
+        <div class="absolute top-1/3 left-1/4 w-[500px] h-[500px] bg-neon-pink/10 rounded-full blur-[120px]"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-neon-blue/10 rounded-full blur-[120px]"></div>
+
+        <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <div class="inline-block px-6 py-3 glass-ultra rounded-full border border-neon-pink/50 mb-6">
+                    <span class="font-orbitron text-neon-pink font-bold tracking-widest text-sm">[ PROGRAMA DE FIDELIZACIÓN ]</span>
+                </div>
+                <h2 class="font-syncopate font-bold text-5xl mb-4"><span class="text-neon-blue neon-text-blue">COQUI</span> <span class="text-neon-pink neon-text-pink">ARCADE</span></h2>
+                <p class="font-rajdhani text-2xl text-gray-400 max-w-3xl mx-auto">Rompe bloques, supera el récord y gana premios. <span class="text-neon-blue font-bold">Cada viernes</span>, quien supere el récord de la semana se lleva un <span class="text-neon-pink font-bold">cupón de descuento</span>.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+                <!-- Panel lateral: reglas / récord -->
+                <div class="lg:col-span-1 space-y-6 order-2 lg:order-1">
+                    <div class="glass-ultra p-6 rounded-2xl border border-neon-blue/30">
+                        <h3 class="font-orbitron font-bold text-lg text-neon-blue mb-3">🏆 RÉCORD ACTUAL</h3>
+                        <div id="arcadeRecordScore" class="font-syncopate font-black text-4xl text-white">000000</div>
+                        <p id="arcadeRecordHolder" class="font-rajdhani text-gray-400 mt-1">Aún nadie ha marcado récord</p>
+                    </div>
+                    <div class="glass-ultra p-6 rounded-2xl border border-neon-pink/30">
+                        <h3 class="font-orbitron font-bold text-lg text-neon-pink mb-3">🎟️ CUPÓN DE VIERNES</h3>
+                        <p id="arcadeFridayStatus" class="font-rajdhani text-gray-300 leading-relaxed">Vuelve un viernes y supera el récord para desbloquear tu cupón de descuento exclusivo.</p>
+                    </div>
+                    <div class="glass-ultra p-6 rounded-2xl border border-white/10">
+                        <h3 class="font-orbitron font-bold text-lg text-white mb-3">🎮 CONTROLES</h3>
+                        <p class="font-rajdhani text-gray-400">Mueve el mouse o usa <span class="text-neon-blue">← →</span> para controlar la paleta. Presiona <span class="text-neon-blue">JUGAR</span> para iniciar.</p>
+                    </div>
+                </div>
+
+                <!-- Juego -->
+                <div class="lg:col-span-2 order-1 lg:order-2">
+                    <div class="glass-ultra rounded-2xl p-6 border-2 border-neon-blue/40 neon-box">
+                        <div class="flex items-center justify-between mb-4 font-orbitron text-sm">
+                            <div class="flex gap-6">
+                                <div><span class="text-gray-400">SCORE</span> <span id="arcadeScore" class="text-neon-blue font-bold">000000</span></div>
+                                <div><span class="text-gray-400">NIVEL</span> <span id="arcadeLevel" class="text-neon-pink font-bold">1</span></div>
+                            </div>
+                            <div class="flex gap-6">
+                                <div><span class="text-gray-400">TIEMPO</span> <span id="arcadeTime" class="text-white font-bold">0.0s</span></div>
+                                <div><span class="text-gray-400">VIDAS</span> <span id="arcadeLives" class="text-neon-pink font-bold">❤❤❤</span></div>
+                            </div>
+                        </div>
+                        <div class="relative w-full flex justify-center">
+                            <canvas id="arcadeCanvas" width="700" height="500" class="w-full max-w-full rounded-lg border border-neon-blue/50" style="background:#050508; box-shadow: 0 0 40px rgba(0,243,255,0.25), inset 0 0 40px rgba(0,0,0,0.6); cursor:none;"></canvas>
+                            <div id="arcadeOverlay" class="absolute inset-0 flex flex-col items-center justify-center text-center rounded-lg" style="background:rgba(5,5,8,0.85); backdrop-filter: blur(4px);">
+                                <h3 id="arcadeOverlayTitle" class="font-syncopate font-bold text-3xl text-neon-blue neon-text-blue mb-3">COQUI ARCADE</h3>
+                                <p id="arcadeOverlayText" class="font-rajdhani text-xl text-gray-300 mb-6 max-w-md px-4">Rompe todos los bloques, no dejes caer la pelota y lucha por el primer lugar del récord semanal.</p>
+                                <button id="arcadePlayBtn" class="btn-cyber bg-gradient-to-r from-neon-blue to-electric-blue px-10 py-4 font-orbitron font-bold text-black">JUGAR →</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CHAPTER 4: Locations (Sucursales) -->
+    <section class="relative py-40 bg-cyber-black overflow-hidden section-reveal" id="sucursales">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="font-syncopate font-bold text-5xl mb-4"><span class="text-neon-pink neon-text-pink">PUNTOS DE VENTA</span></h2>
+                <p class="font-rajdhani text-2xl text-gray-400">11 sucursales listas para atenderte</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <button onclick="selectStore('citymall', 'City Mall Alajuela', '2441-8956')" class="glass-ultra p-8 rounded-2xl card-cyber border border-white/10 text-left group">
+                    <div class="flex items-center justify-between mb-4"><h3 class="font-orbitron font-bold text-2xl group-hover:text-neon-blue transition-colors">City Mall Alajuela</h3><svg class="w-6 h-6 text-neon-blue opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></div>
+                    <p class="text-gray-400 font-rajdhani mb-2">Alajuela, Costa Rica</p><p class="text-neon-blue font-orbitron">📞 2441-8956</p>
+                </button>
+                <button onclick="selectStore('oxigeno', 'Mall Oxígeno', '2296-4521')" class="glass-ultra p-8 rounded-2xl card-cyber border border-white/10 text-left group">
+                    <div class="flex items-center justify-between mb-4"><h3 class="font-orbitron font-bold text-2xl group-hover:text-neon-blue transition-colors">Mall Oxígeno</h3><svg class="w-6 h-6 text-neon-blue opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></div>
+                    <p class="text-gray-400 font-rajdhani mb-2">Heredia, Costa Rica</p><p class="text-neon-blue font-orbitron">📞 2296-4521</p>
+                </button>
+                <button onclick="selectStore('lincoln', 'Lincoln Plaza', '2234-5678')" class="glass-ultra p-8 rounded-2xl card-cyber border border-white/10 text-left group">
+                    <div class="flex items-center justify-between mb-4"><h3 class="font-orbitron font-bold text-2xl group-hover:text-neon-blue transition-colors">Lincoln Plaza</h3><svg class="w-6 h-6 text-neon-blue opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></div>
+                    <p class="text-gray-400 font-rajdhani mb-2">San José, Costa Rica</p><p class="text-neon-blue font-orbitron">📞 2234-5678</p>
+                </button>
+            </div>
+            <div id="storeInfo" class="mt-12 glass-ultra rounded-2xl p-8 hidden border-2 border-neon-blue/50 neon-box">
+                <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                    <div><h3 id="storeName" class="font-syncopate font-bold text-4xl text-neon-blue mb-2">City Mall Alajuela</h3><p class="text-gray-300 font-rajdhani text-xl">Horario: Lunes a Domingo 10:00 AM - 8:00 PM</p></div>
+                    <div class="flex gap-4">
+                        <a id="whatsappBtn" href="#" target="_blank" class="btn-cyber bg-green-600 hover:bg-green-500 px-8 py-4 rounded-lg font-rajdhani font-bold flex items-center gap-3">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.084 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                            CONTACTAR WHATSAPP
+                        </a>
+                        <button onclick="closeStoreInfo()" class="btn-cyber border-2 border-white/30 px-8 py-4 rounded-lg font-rajdhani font-bold hover:bg-white/10">CERRAR</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACTO Y UBICACIÓN -->
+    <section class="relative py-40 bg-cyber-dark overflow-hidden section-reveal" id="contacto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="font-syncopate font-bold text-5xl lg:text-6xl mb-6"><span class="text-transparent bg-clip-text bg-gradient-to-r from-neon-blue to-neon-pink">¿DÓNDE ESTAMOS?</span></h2>
+            </div>
+            <div class="glass-ultra p-10 rounded-3xl border border-white/10">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                    <div>
+                        <h3 class="font-orbitron font-bold text-2xl text-neon-blue mb-6">Información de Contacto</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <svg class="w-6 h-6 text-neon-blue mr-3 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                                <div><div class="font-rajdhani font-bold text-lg">Dirección de Oficinas Centrales de la Empresa</div><div class="text-gray-400">Ciudad, Estado. Costa Rica</div></div>
+                            </div>
+                            <div class="flex items-start">
+                                <svg class="w-6 h-6 text-neon-blue mr-3 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                                <div><div class="font-rajdhani font-bold text-lg">Teléfonos</div><div class="text-gray-400">TEL 1 | TEL 2</div></div>
+                            </div>
+                            <div class="flex items-start">
+                                <svg class="w-6 h-6 text-neon-blue mr-3 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                                <div><div class="font-rajdhani font-bold text-lg">Correo Electrónico</div><div class="text-gray-400">correo@tudominio.com</div></div>
+                            </div>
+                            <div class="flex items-start">
+                                <svg class="w-6 h-6 text-neon-blue mr-3 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
+                                <div><div class="font-rajdhani font-bold text-lg">FAX</div><div class="text-gray-400">FAX</div></div>
+                            </div>
+                        </div>
+                        <div class="mt-8">
+                            <h4 class="font-orbitron font-bold text-xl text-neon-pink mb-4">Horario de Atención</h4>
+                            <div class="space-y-2 text-gray-300 font-rajdhani text-lg">
+                                <div class="flex justify-between"><span>Lunes a Viernes:</span><span class="text-neon-blue font-bold">9am a 5pm</span></div>
+                                <div class="flex justify-between"><span>Sábados:</span><span class="text-neon-blue font-bold">9am a 12md</span></div>
+                                <div class="flex justify-between"><span>Domingos:</span><span class="text-neon-red font-bold">Cerrado</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="glass-ultra rounded-2xl p-8 border border-neon-blue/30">
+                        <h3 class="font-orbitron font-bold text-2xl text-neon-blue mb-6">Enlaces Rápidos</h3>
+                        <div class="space-y-3">
+                            <a href="#" class="block p-4 rounded-xl bg-white/5 hover:bg-neon-blue/20 transition-all border border-white/10 hover:border-neon-blue/50"><div class="font-rajdhani font-bold text-lg">Condiciones del Servicio</div></a>
+                            <a href="#" class="block p-4 rounded-xl bg-white/5 hover:bg-neon-blue/20 transition-all border border-white/10 hover:border-neon-blue/50"><div class="font-rajdhani font-bold text-lg">Política de Privacidad</div></a>
+                            <a href="#" class="block p-4 rounded-xl bg-white/5 hover:bg-neon-blue/20 transition-all border border-white/10 hover:border-neon-blue/50"><div class="font-rajdhani font-bold text-lg">Contacto</div></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- CHATBOT ASISTENTE 24/7 (Reemplaza al Trojan) -->
+    <!-- ========================================== -->
+    <button onclick="toggleChat()" class="fixed bottom-8 right-8 z-50 bg-gradient-to-r from-neon-blue to-electric-blue hover:from-cyan-400 hover:to-blue-500 text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-all animate-pulse border-2 border-white/20 group">
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
+    </button>
+
+    <div id="chatWindow" class="chat-window glass-ultra border border-neon-blue/30">
+        <div class="flex items-center justify-between p-4 border-b border-neon-blue/20 bg-cyber-dark/80">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-neon-blue to-electric-blue flex items-center justify-center">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                </div>
+                <div>
+                    <h4 class="font-orbitron font-bold text-sm text-neon-blue">Asistente Coqui 24/7</h4>
+                    <div class="flex items-center gap-1"><div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div><span class="text-xs text-gray-400">En línea</span></div>
+                </div>
+            </div>
+            <button onclick="toggleChat()" class="text-gray-400 hover:text-white transition-colors">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+        </div>
+        
+        <div id="chatMessages" class="chat-messages">
+            <!-- Messages will be injected here -->
+        </div>
+        
+        <div class="chat-input-area">
+            <input type="text" id="chatInput" class="chat-input" placeholder="Escribe tu mensaje..." onkeypress="handleChatKeyPress(event)">
+            <button onclick="sendUserMessage()" class="chat-send-btn">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const cursor = document.querySelector('.cursor');
+        const cursorFollower = document.querySelector('.cursor-follower');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px';
+            setTimeout(() => { cursorFollower.style.left = e.clientX - 10 + 'px'; cursorFollower.style.top = e.clientY - 10 + 'px'; }, 100);
+        });
+        document.addEventListener('click', () => { cursor.style.transform = 'scale(0.8)'; setTimeout(() => { cursor.style.transform = 'scale(1)'; }, 100); });
+        
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            document.getElementById('progressBar').style.width = (winScroll / height) * 100 + '%';
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 100) { navbar.classList.add('scrolled'); } else { navbar.classList.remove('scrolled'); }
+        });
+        
+        function createParticles() {
+            const container = document.getElementById('particles');
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.width = Math.random() * 4 + 2 + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.animationDelay = Math.random() * 10 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                container.appendChild(particle);
+            }
+        }
+        createParticles();
+        
+        const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -100px 0px' };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('active'); } });
+        }, observerOptions);
+        document.querySelectorAll('.section-reveal').forEach((el) => observer.observe(el));
+        
+        let currentFace = 0, autoRotate = true, autoRotateInterval;
+        const cube = document.getElementById('productCube');
+        const indicators = document.querySelectorAll('.cube-indicator');
+        const rotations = [{ x: 0, y: 0 }, { x: 0, y: -90 }, { x: 0, y: -180 }, { x: 0, y: -270 }, { x: -90, y: 0 }, { x: 90, y: 0 }];
+        
+        function updateCube() {
+            const rotation = rotations[currentFace];
+            cube.style.transform = `rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`;
+            indicators.forEach((ind, idx) => { ind.classList.toggle('active', idx === currentFace); });
+        }
+        function rotateCube(direction) {
+            currentFace = direction === 'next' ? (currentFace + 1) % 6 : (currentFace - 1 + 6) % 6;
+            updateCube(); resetAutoRotate();
+        }
+        function goToFace(faceIndex) { currentFace = faceIndex; updateCube(); resetAutoRotate(); }
+        function toggleAutoRotate() { autoRotate = !autoRotate; autoRotate ? startAutoRotate() : clearInterval(autoRotateInterval); }
+        function startAutoRotate() { autoRotateInterval = setInterval(() => { if (autoRotate) { currentFace = (currentFace + 1) % 6; updateCube(); } }, 4000); }
+        function resetAutoRotate() { if (autoRotate) { clearInterval(autoRotateInterval); startAutoRotate(); } }
+        updateCube(); startAutoRotate();
+        
+        let touchStartX = 0, touchEndX = 0;
+        cube.addEventListener('touchstart', (e) => { touchStartX = e.changedTouches[0].screenX; });
+        cube.addEventListener('touchend', (e) => { touchEndX = e.changedTouches[0].screenX; handleSwipe(); });
+        function handleSwipe() {
+            const diff = touchStartX - touchEndX;
+            if (Math.abs(diff) > 50) { diff > 0 ? rotateCube('next') : rotateCube('prev'); }
+        }
+        
+        /* ============ COQUI ARCADE (Breakout - Fidelización) ============ */
+        (function() {
+            const canvas = document.getElementById('arcadeCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const W = canvas.width, H = canvas.height;
+
+            const overlay = document.getElementById('arcadeOverlay');
+            const overlayTitle = document.getElementById('arcadeOverlayTitle');
+            const overlayText = document.getElementById('arcadeOverlayText');
+            const playBtn = document.getElementById('arcadePlayBtn');
+            const scoreEl = document.getElementById('arcadeScore');
+            const levelEl = document.getElementById('arcadeLevel');
+            const timeEl = document.getElementById('arcadeTime');
+            const livesEl = document.getElementById('arcadeLives');
+            const recordScoreEl = document.getElementById('arcadeRecordScore');
+            const recordHolderEl = document.getElementById('arcadeRecordHolder');
+            const fridayStatusEl = document.getElementById('arcadeFridayStatus');
+
+            const NEON_BLUE = '#00f3ff', NEON_PINK = '#ff00ff', NEON_PURPLE = '#b829dd';
+            const BLOCK_COLORS = [NEON_BLUE, '#0052ff', NEON_PURPLE, NEON_PINK];
+
+            const STORAGE_KEY = 'coquiArcadeRecord';
+
+            function loadRecord() {
+                try {
+                    const raw = localStorage.getItem(STORAGE_KEY);
+                    return raw ? JSON.parse(raw) : { score: 0, date: null };
+                } catch (e) { return { score: 0, date: null }; }
+            }
+            function saveRecord(rec) {
+                try { localStorage.setItem(STORAGE_KEY, JSON.stringify(rec)); } catch (e) {}
+            }
+
+            let record = loadRecord();
+
+            function isFriday() { return new Date().getDay() === 5; }
+
+            function renderRecordPanel() {
+                recordScoreEl.textContent = String(record.score).padStart(6, '0');
+                recordHolderEl.textContent = record.score > 0
+                    ? 'Última marca: ' + (record.date ? new Date(record.date).toLocaleDateString('es-CR') : '—')
+                    : 'Aún nadie ha marcado récord';
+
+                if (isFriday()) {
+                    fridayStatusEl.innerHTML = '¡Hoy es <span class="text-neon-blue font-bold">viernes</span>! Supera <span class="text-neon-pink font-bold">' + record.score + '</span> puntos para ganar tu cupón de descuento.';
+                } else {
+                    fridayStatusEl.textContent = 'El cupón se otorga al mejor puntaje registrado cada viernes. ¡Practica y vuelve el viernes!';
+                }
+            }
+            renderRecordPanel();
+
+            const game = {
+                running: false,
+                score: 0,
+                level: 1,
+                lives: 3,
+                time: 0,
+                startTime: 0,
+                paddle: { w: 110, h: 14, x: W / 2 - 55, y: H - 40, speed: 8 },
+                ball: { x: W / 2, y: H - 60, r: 8, dx: 4, dy: -4, speed: 4 },
+                bricks: [],
+                brickRows: 4,
+                brickCols: 8,
+                brickW: 0,
+                brickH: 22,
+                brickPad: 8,
+                brickTop: 60,
+                stars: []
+            };
+
+            function initStars() {
+                game.stars = [];
+                for (let i = 0; i < 40; i++) {
+                    game.stars.push({ x: Math.random() * W, y: Math.random() * H, r: Math.random() * 1.5 + 0.5, s: Math.random() * 0.5 + 0.1 });
+                }
+            }
+            initStars();
+
+            function initBricks() {
+                game.bricks = [];
+                game.brickW = (W - game.brickPad * (game.brickCols + 1)) / game.brickCols;
+                for (let r = 0; r < game.brickRows; r++) {
+                    for (let c = 0; c < game.brickCols; c++) {
+                        game.bricks.push({
+                            x: game.brickPad + c * (game.brickW + game.brickPad),
+                            y: game.brickTop + r * (game.brickH + game.brickPad),
+                            w: game.brickW, h: game.brickH,
+                            alive: true,
+                            color: BLOCK_COLORS[r % BLOCK_COLORS.length]
+                        });
+                    }
+                }
+            }
+
+            function resetBallAndPaddle() {
+                game.paddle.x = W / 2 - game.paddle.w / 2;
+                game.ball.x = W / 2;
+                game.ball.y = H - 60;
+                const dir = Math.random() > 0.5 ? 1 : -1;
+                game.ball.speed = 4 + (game.level - 1) * 0.5;
+                game.ball.dx = dir * game.ball.speed;
+                game.ball.dy = -game.ball.speed;
+            }
+
+            function startGame() {
+                game.running = true;
+                game.score = 0;
+                game.level = 1;
+                game.lives = 3;
+                game.startTime = performance.now();
+                overlay.style.display = 'none';
+                initBricks();
+                resetBallAndPaddle();
+                updateHUD();
+                requestAnimationFrame(loop);
+            }
+
+            function updateHUD() {
+                scoreEl.textContent = String(game.score).padStart(6, '0');
+                levelEl.textContent = game.level;
+                timeEl.textContent = game.time.toFixed(1) + 's';
+                livesEl.textContent = '❤'.repeat(Math.max(game.lives, 0)) + '🖤'.repeat(Math.max(3 - game.lives, 0));
+            }
+
+            function endGame(won) {
+                game.running = false;
+                let newRecord = false;
+                if (game.score > record.score) {
+                    record = { score: game.score, date: new Date().toISOString() };
+                    saveRecord(record);
+                    newRecord = true;
+                    renderRecordPanel();
+                }
+
+                overlay.style.display = 'flex';
+                if (newRecord) {
+                    overlayTitle.textContent = '¡NUEVO RÉCORD!';
+                    overlayTitle.className = 'font-syncopate font-bold text-3xl text-neon-pink neon-text-pink mb-3';
+                    if (isFriday()) {
+                        overlayText.innerHTML = 'Puntaje: <span class="text-neon-blue font-bold">' + game.score + '</span><br>¡Hoy es viernes! Muestra este resultado en caja para reclamar tu <span class="text-neon-pink font-bold">cupón de descuento</span>.';
+                    } else {
+                        overlayText.innerHTML = 'Puntaje: <span class="text-neon-blue font-bold">' + game.score + '</span><br>Nuevo récord guardado. Si sigue en pie el viernes, ¡ganas un cupón!';
+                    }
+                } else {
+                    overlayTitle.textContent = won ? '¡NIVEL SUPERADO!' : 'JUEGO TERMINADO';
+                    overlayTitle.className = 'font-syncopate font-bold text-3xl text-neon-blue neon-text-blue mb-3';
+                    overlayText.innerHTML = 'Puntaje: <span class="text-neon-blue font-bold">' + game.score + '</span><br>Récord actual: <span class="text-neon-pink font-bold">' + record.score + '</span> puntos.';
+                }
+                playBtn.textContent = 'JUGAR DE NUEVO →';
+            }
+
+            function nextLevel() {
+                game.level += 1;
+                game.brickRows = Math.min(game.brickRows + 1, 7);
+                initBricks();
+                resetBallAndPaddle();
+            }
+
+            function collide(ball, rect) {
+                return ball.x + ball.r > rect.x && ball.x - ball.r < rect.x + rect.w &&
+                       ball.y + ball.r > rect.y && ball.y - ball.r < rect.y + rect.h;
+            }
+
+            function update(dt) {
+                game.time = (performance.now() - game.startTime) / 1000;
+
+                const b = game.ball, p = game.paddle;
+                b.x += b.dx;
+                b.y += b.dy;
+
+                if (b.x - b.r < 0) { b.x = b.r; b.dx *= -1; }
+                if (b.x + b.r > W) { b.x = W - b.r; b.dx *= -1; }
+                if (b.y - b.r < 0) { b.y = b.r; b.dy *= -1; }
+
+                if (collide(b, { x: p.x, y: p.y, w: p.w, h: p.h }) && b.dy > 0) {
+                    const hitPos = (b.x - (p.x + p.w / 2)) / (p.w / 2);
+                    b.dx = hitPos * game.ball.speed * 1.5;
+                    b.dy = -Math.abs(b.dy);
+                }
+
+                let aliveCount = 0;
+                for (const brick of game.bricks) {
+                    if (!brick.alive) continue;
+                    aliveCount++;
+                    if (collide(b, brick)) {
+                        brick.alive = false;
+                        game.score += 10 * game.level;
+                        const overlapLeft = Math.abs((b.x + b.r) - brick.x);
+                        const overlapRight = Math.abs((brick.x + brick.w) - (b.x - b.r));
+                        const overlapTop = Math.abs((b.y + b.r) - brick.y);
+                        const overlapBottom = Math.abs((brick.y + brick.h) - (b.y - b.r));
+                        const minOverlap = Math.min(overlapLeft, overlapRight, overlapTop, overlapBottom);
+                        if (minOverlap === overlapTop || minOverlap === overlapBottom) b.dy *= -1;
+                        else b.dx *= -1;
+                        break;
+                    }
+                }
+
+                if (aliveCount === 0) {
+                    nextLevel();
+                    return;
+                }
+
+                if (b.y - b.r > H) {
+                    game.lives -= 1;
+                    if (game.lives <= 0) {
+                        updateHUD();
+                        endGame(false);
+                        return;
+                    }
+                    resetBallAndPaddle();
+                }
+
+                updateHUD();
+            }
+
+            function draw() {
+                ctx.clearRect(0, 0, W, H);
+                ctx.fillStyle = '#050508';
+                ctx.fillRect(0, 0, W, H);
+
+                for (const s of game.stars) {
+                    ctx.globalAlpha = s.s;
+                    ctx.fillStyle = '#ffffff';
+                    ctx.beginPath();
+                    ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+                ctx.globalAlpha = 1;
+
+                for (const brick of game.bricks) {
+                    if (!brick.alive) continue;
+                    ctx.fillStyle = brick.color;
+                    ctx.shadowColor = brick.color;
+                    ctx.shadowBlur = 12;
+                    ctx.fillRect(brick.x, brick.y, brick.w, brick.h);
+                    ctx.shadowBlur = 0;
+                }
+
+                const p = game.paddle;
+                ctx.fillStyle = NEON_BLUE;
+                ctx.shadowColor = NEON_BLUE;
+                ctx.shadowBlur = 20;
+                ctx.fillRect(p.x, p.y, p.w, p.h);
+                ctx.shadowBlur = 0;
+
+                const b = game.ball;
+                ctx.beginPath();
+                ctx.fillStyle = NEON_PINK;
+                ctx.shadowColor = NEON_PINK;
+                ctx.shadowBlur = 20;
+                ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.shadowBlur = 0;
+            }
+
+            function loop(ts) {
+                if (!game.running) return;
+                update();
+                draw();
+                requestAnimationFrame(loop);
+            }
+
+            canvas.addEventListener('mousemove', (e) => {
+                const rect = canvas.getBoundingClientRect();
+                const scaleX = W / rect.width;
+                const mouseX = (e.clientX - rect.left) * scaleX;
+                game.paddle.x = Math.min(Math.max(mouseX - game.paddle.w / 2, 0), W - game.paddle.w);
+            });
+
+            const keys = {};
+            document.addEventListener('keydown', (e) => {
+                if (!game.running) return;
+                if (e.key === 'ArrowLeft') game.paddle.x = Math.max(game.paddle.x - game.paddle.speed * 3, 0);
+                if (e.key === 'ArrowRight') game.paddle.x = Math.min(game.paddle.x + game.paddle.speed * 3, W - game.paddle.w);
+            });
+
+            playBtn.addEventListener('click', startGame);
+            draw();
+        })();
+
+        function selectStore(id, name, phone) {
+            document.getElementById('storeName').textContent = name;
+            document.getElementById('storeInfo').classList.remove('hidden');
+            document.getElementById('whatsappBtn').href = `https://wa.me/506${phone.replace(/-/g, '')}?text=${encodeURIComponent(`Hola Video Juegos Coqui - ${name}, me interesa información sobre sus productos.`)}`;
+            document.getElementById('storeInfo').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+        function closeStoreInfo() { document.getElementById('storeInfo').classList.add('hidden'); }
+        function toggleMenu() { alert('Menú móvil - Implementar drawer navigation cyberpunk'); }
+        
+        if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+            gsap.registerPlugin(ScrollTrigger);
+            gsap.utils.toArray('.card-cyber').forEach((card, i) => {
+                gsap.from(card, { scrollTrigger: { trigger: card, start: 'top bottom', toggleActions: 'play none none none' }, y: 100, opacity: 0, duration: 0.8, delay: i * 0.1, ease: 'power3.out' });
+            });
+        }
+
+        // ==========================================
+        // CHATBOT 24/7 LOGIC
+        // ==========================================
+        let chatStep = 0;
+        let userData = { name: '', phone: '', interest: '' };
+
+        function toggleChat() {
+            const chatWindow = document.getElementById('chatWindow');
+            if (chatWindow.style.display === 'flex') {
+                chatWindow.style.display = 'none';
+            } else {
+                chatWindow.style.display = 'flex';
+                if (document.getElementById('chatMessages').children.length === 0) {
+                    setTimeout(() => {
+                        addBotMessage("¡Hola! 👋 Soy el Asistente Virtual 24/7 de Video Juegos Coqui. ¿En qué puedo ayudarte hoy?");
+                        setTimeout(() => showChatOptions(), 500);
+                    }, 300);
+                }
+            }
+        }
+
+        function addBotMessage(text) {
+            const messagesDiv = document.getElementById('chatMessages');
+            const msg = document.createElement('div');
+            msg.className = 'message bot';
+            msg.textContent = text;
+            messagesDiv.appendChild(msg);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        function addUserMessage(text) {
+            const messagesDiv = document.getElementById('chatMessages');
+            const msg = document.createElement('div');
+            msg.className = 'message user';
+            msg.textContent = text;
+            messagesDiv.appendChild(msg);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        function showChatOptions() {
+            const messagesDiv = document.getElementById('chatMessages');
+            const optionsDiv = document.createElement('div');
+            optionsDiv.className = 'chat-options';
+            optionsDiv.innerHTML = `
+                <button class="chat-option-btn" onclick="handleOption(1)">1️⃣ Consultar disponibilidad de un juego</button>
+                <button class="chat-option-btn" onclick="handleOption(2)">2️⃣ Ver horarios de sucursales</button>
+                <button class="chat-option-btn" onclick="handleOption(3)">3️⃣ Hablar con un asesor humano</button>
+                <button class="chat-option-btn" onclick="handleOption(4)">4️⃣ Dejar mis datos para una cotización</button>
+            `;
+            messagesDiv.appendChild(optionsDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        function handleOption(option) {
+            // Remove options after selection
+            const optionsDiv = document.querySelector('.chat-options');
+            if (optionsDiv) optionsDiv.remove();
+
+            if (option === 1) {
+                addUserMessage("Consultar disponibilidad de un juego");
+                setTimeout(() => {
+                    addBotMessage("¡Excelente! ¿Qué juego o consola estás buscando? (Ej: Zelda TOTK, PS5, etc.)");
+                    chatStep = 1;
+                }, 600);
+            } else if (option === 2) {
+                addUserMessage("Ver horarios de sucursales");
+                setTimeout(() => {
+                    addBotMessage("🕒 Nuestro horario general es:\nLunes a Viernes: 9am a 5pm\nSábados: 9am a 12md\nDomingos: Cerrado\n\nTenemos 11 sucursales en todo el país (City Mall Alajuela, Mall Oxígeno, Lincoln Plaza, entre otras). ¿Te gustaría el número de alguna en específico?");
+                }, 600);
+            } else if (option === 3) {
+                addUserMessage("Hablar con un asesor humano");
+                setTimeout(() => {
+                    addBotMessage("Con gusto te conecto. Por favor, déjame tu nombre completo para agendar la llamada.");
+                    chatStep = 3;
+                }, 600);
+            } else if (option === 4) {
+                addUserMessage("Dejar mis datos para una cotización");
+                setTimeout(() => {
+                    addBotMessage("¡Perfecto! Para prepararte la mejor oferta, ¿cuál es tu nombre completo?");
+                    chatStep = 4;
+                }, 600);
+            }
+        }
+
+        function handleChatKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendUserMessage();
+            }
+        }
+
+        function sendUserMessage() {
+            const input = document.getElementById('chatInput');
+            const text = input.value.trim();
+            if (!text) return;
+
+            addUserMessage(text);
+            input.value = '';
+
+            setTimeout(() => {
+                if (chatStep === 1) {
+                    userData.interest = text;
+                    addBotMessage(`¡Anotado! Estás buscando: "${text}". Ahora, por favor, déjame tu número de teléfono (con código de país, ej: +506...) para que un asesor verifique el stock y te contacte en menos de 15 minutos.`);
+                    chatStep = 2;
+                } else if (chatStep === 2) {
+                    userData.phone = text;
+                    addBotMessage(`¡Gracias! Hemos registrado tu solicitud. Un asesor te contactará al ${userData.phone} para confirmar la disponibilidad de "${userData.interest}". ¡Que tengas un excelente día! 🎮`);
+                    chatStep = 0;
+                    setTimeout(() => showChatOptions(), 1500);
+                } else if (chatStep === 3) {
+                    userData.name = text;
+                    addBotMessage(`Gracias ${userData.name}. Ahora, por favor, déjame tu número de teléfono para que el asesor te llame a la brevedad.`);
+                    chatStep = 3.5;
+                } else if (chatStep === 3.5) {
+                    userData.phone = text;
+                    addBotMessage(`¡Listo, ${userData.name}! Un asesor se comunicará contigo al ${userData.phone} en los próximos minutos. ¡Gracias por contactar a Video Juegos Coqui! 🎮`);
+                    chatStep = 0;
+                    setTimeout(() => showChatOptions(), 1500);
+                } else if (chatStep === 4) {
+                    userData.name = text;
+                    addBotMessage(`Gracias ${userData.name}. ¿Qué producto o categoría te interesa cotizar?`);
+                    chatStep = 4.5;
+                } else if (chatStep === 4.5) {
+                    userData.interest = text;
+                    addBotMessage(`¡Entendido! Por último, déjame tu número de teléfono para enviarte la cotización detallada por WhatsApp.`);
+                    chatStep = 4.8;
+                } else if (chatStep === 4.8) {
+                    userData.phone = text;
+                    addBotMessage(`¡Perfecto, ${userData.name}! Te enviaremos la cotización de "${userData.interest}" al ${userData.phone} muy pronto. ¡Gracias por preferirnos! 🎮`);
+                    chatStep = 0;
+                    setTimeout(() => showChatOptions(), 1500);
+                } else {
+                    addBotMessage("Entendido. Si necesitas algo más, por favor selecciona una de las opciones siguientes:");
+                    setTimeout(() => showChatOptions(), 500);
+                }
+            }, 800);
+        }
+    </script>
+</body>
+</html>

@@ -275,11 +275,14 @@
         
         @media (max-width: 768px) {
             body { cursor: auto; } .cursor, .cursor-follower { display: none; }
-            .cube { width: 280px; height: 380px; } .cube-face { width: 280px; height: 380px; } .cube-face-image-container { height: 240px; }
+            .cube { width: 280px; height: 380px; } .cube-face { width: 280px; height: 380px; } .cube-face-image-container { height: 220px; }
+            .cube-face-content { padding: 12px; }
+            .cube-face-content h3 { font-size: 1.25rem; margin-bottom: 4px; }
+            .cube-face-content p { font-size: 0.75rem; margin-bottom: 8px; }
             .cube-face-front { transform: rotateY(0deg) translateZ(140px); } .cube-face-back { transform: rotateY(180deg) translateZ(140px); }
             .cube-face-right { transform: rotateY(90deg) translateZ(140px); } .cube-face-left { transform: rotateY(-90deg) translateZ(140px); }
             .navbar-logo-container { width: 220px; height: 70px; } .nav-link-neo { padding: 12px 20px; font-size: 14px; } .btn-cart-neo { padding: 12px 24px; font-size: 12px; }
-            .chat-window { width: calc(100% - 32px); right: 16px; bottom: 90px; height: 450px; }
+            .chat-window { width: calc(100% - 32px); right: 16px; bottom: 85px; height: calc(100vh - 110px); max-height: 450px; }
         }
     </style>
 </head>
@@ -315,16 +318,16 @@
     <!-- HERO SECTION -->
     <section class="relative min-h-screen flex items-center justify-center overflow-hidden cyber-grid" id="inicio">
         <div id="particles" class="absolute inset-0"></div>
-        <div class="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-neon-blue/20 rounded-full blur-[120px] animate-pulse-fast"></div>
-        <div class="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-neon-pink/20 rounded-full blur-[120px] animate-pulse-fast" style="animation-delay: 1s;"></div>
+        <div class="absolute top-1/4 left-1/4 w-[300px] h-[300px] md:w-[600px] md:h-[600px] bg-neon-blue/20 rounded-full blur-[120px] animate-pulse-fast"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-[300px] h-[300px] md:w-[600px] md:h-[600px] bg-neon-pink/20 rounded-full blur-[120px] animate-pulse-fast" style="animation-delay: 1s;"></div>
         
-        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-32">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                 <div class="space-y-8">
                     <div class="inline-block px-6 py-3 glass-ultra rounded-full border border-neon-blue/50">
                         <span class="font-orbitron text-neon-blue font-bold tracking-widest text-sm">[ SISTEMA INICIADO // 1998 ]</span>
                     </div>
-                    <h1 class="font-syncopate font-bold text-4xl lg:text-6xl leading-[1.05] crt-power-on">
+                    <h1 class="font-syncopate font-bold text-3xl md:text-4xl lg:text-6xl leading-[1.05] crt-power-on">
                         <span class="block text-white chroma-title crt-scan-sweep" data-text="DESPIERTA AL">DESPIERTA AL</span>
                         <span class="block holo-gradient-text mt-1">GAMER QUE LLEVAS DENTRO</span>
                         <span class="block text-white text-2xl lg:text-4xl mt-3">RETRO Y NEXT-GEN<br>EN UN SOLO LUGAR</span>
@@ -361,10 +364,10 @@
     </section>
 
     <!-- CHAPTER 2: The Legacy -->
-    <section class="relative py-40 bg-cyber-dark overflow-hidden section-reveal" id="legacy">
+    <section class="relative py-16 md:py-32 lg:py-40 bg-cyber-dark overflow-hidden section-reveal" id="legacy">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-20">
-                <h2 class="font-syncopate font-bold text-5xl lg:text-7xl mb-6"><span class="text-transparent bg-clip-text bg-gradient-to-r from-neon-blue to-neon-pink">NUESTRO LEGADO</span></h2>
+                <h2 class="font-syncopate font-bold text-4xl md:text-5xl lg:text-7xl mb-6"><span class="text-transparent bg-clip-text bg-gradient-to-r from-neon-blue to-neon-pink">NUESTRO LEGADO</span></h2>
                 <p class="font-rajdhani text-2xl text-gray-400 max-w-3xl mx-auto">Dos décadas y media conectando gamers con sus mejores experiencias. Desde los cartuchos retro hasta la última generación.</p>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -388,17 +391,17 @@
     </section>
 
     <!-- SOBRE NOSOTROS -->
-    <section class="relative py-40 bg-cyber-black overflow-hidden section-reveal" id="nosotros">
+    <section class="relative py-16 md:py-32 lg:py-40 bg-cyber-black overflow-hidden section-reveal" id="nosotros">
         <div class="absolute inset-0 cyber-grid opacity-30"></div>
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h2 class="font-syncopate font-bold text-5xl lg:text-6xl mb-6"><span class="text-transparent bg-clip-text bg-gradient-to-r from-neon-blue to-neon-pink">SOBRE NOSOTROS</span></h2>
+                <h2 class="font-syncopate font-bold text-3xl md:text-5xl lg:text-6xl mb-6"><span class="text-transparent bg-clip-text bg-gradient-to-r from-neon-blue to-neon-pink">SOBRE NOSOTROS</span></h2>
                 <p class="font-rajdhani text-2xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
                     Somos una empresa con más de <span class="text-neon-blue font-bold">27 años de experiencia</span> en el mercado de los videojuegos, líderes en videojuegos de nueva y vieja generación en Costa Rica.
                 </p>
             </div>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                <div class="glass-ultra p-10 rounded-3xl card-cyber border border-white/10">
+                <div class="glass-ultra p-6 lg:p-10 rounded-3xl card-cyber border border-white/10">
                     <div class="flex items-center mb-6">
                         <div class="w-16 h-16 bg-gradient-to-br from-neon-blue to-electric-blue rounded-2xl flex items-center justify-center mr-4">
                             <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
@@ -408,7 +411,7 @@
                     <p class="text-gray-300 font-rajdhani text-lg leading-relaxed">Ser una empresa de reconocido prestigio a nivel nacional, con autonomía administrativa y una garantía sólida y confiable, ofreciendo productos de alta calidad.</p>
                     <p class="text-gray-300 font-rajdhani text-lg leading-relaxed mt-4">Nos enfocamos en el mejoramiento continuo en todas nuestras áreas, manteniendo un alto nivel de compromiso con el servicio al cliente y promoviendo la formación integral de nuestro personal.</p>
                 </div>
-                <div class="glass-ultra p-10 rounded-3xl card-cyber border border-white/10">
+                <div class="glass-ultra p-6 lg:p-10 rounded-3xl card-cyber border border-white/10">
                     <div class="flex items-center mb-6">
                         <div class="w-16 h-16 bg-gradient-to-br from-neon-pink to-neon-purple rounded-2xl flex items-center justify-center mr-4">
                             <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
@@ -423,7 +426,7 @@
     </section>
 
     <!-- ESTADÍSTICAS -->
-    <section class="relative py-20 bg-cyber-dark overflow-hidden section-reveal">
+    <section class="relative py-12 md:py-20 bg-cyber-dark overflow-hidden section-reveal">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div class="glass-ultra p-8 rounded-3xl text-center card-cyber border border-neon-blue/30">
@@ -443,11 +446,11 @@
     </section>
 
     <!-- CATEGORÍAS QUE MANEJAMOS -->
-    <section class="relative py-40 bg-cyber-black overflow-hidden section-reveal" id="categorias">
+    <section class="relative py-16 md:py-32 lg:py-40 bg-cyber-black overflow-hidden section-reveal" id="categorias">
         <div class="absolute inset-0 cyber-grid opacity-30"></div>
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h2 class="font-syncopate font-bold text-5xl lg:text-6xl mb-6"><span class="text-neon-blue neon-text-blue">CATEGORÍAS</span> <span class="text-white">QUE MANEJAMOS</span></h2>
+                <h2 class="font-syncopate font-bold text-3xl md:text-5xl lg:text-6xl mb-6"><span class="text-neon-blue neon-text-blue">CATEGORÍAS</span> <span class="text-white">QUE MANEJAMOS</span></h2>
             </div>
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
                 <div class="glass-ultra p-6 rounded-2xl text-center card-cyber border border-white/10 hover:border-neon-blue/50"><div class="text-4xl mb-3">🎮</div><div class="font-rajdhani font-bold text-lg">Juego Usado</div></div>
@@ -461,11 +464,11 @@
     </section>
 
     <!-- CHAPTER 3: The Arsenal (3D Cube Gallery) -->
-    <section class="relative py-40 bg-cyber-dark overflow-hidden section-reveal" id="juegos">
+    <section class="relative py-16 md:py-32 lg:py-40 bg-cyber-dark overflow-hidden section-reveal" id="juegos">
         <div class="absolute inset-0 cyber-grid opacity-30"></div>
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h2 class="font-syncopate font-bold text-5xl lg:text-7xl mb-4"><span class="text-neon-blue neon-text-blue">ARSENAL</span> <span class="text-white">GAMER</span></h2>
+                <h2 class="font-syncopate font-bold text-4xl md:text-5xl lg:text-7xl mb-4"><span class="text-neon-blue neon-text-blue">ARSENAL</span> <span class="text-white">GAMER</span></h2>
                 <p class="font-rajdhani text-2xl text-gray-400">Equipamiento de élite para jugadores de élite</p>
             </div>
             <div class="cube-container">
@@ -543,23 +546,23 @@
     </section>
 
     <!-- CATÁLOGO -->
-    <section class="relative py-40 bg-cyber-black overflow-hidden section-reveal" id="catalogo">
+    <section class="relative py-16 md:py-32 lg:py-40 bg-cyber-black overflow-hidden section-reveal" id="catalogo">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h2 class="font-syncopate font-bold text-5xl lg:text-6xl mb-6"><span class="text-transparent bg-clip-text bg-gradient-to-r from-neon-blue to-neon-pink">CATÁLOGO</span></h2>
+                <h2 class="font-syncopate font-bold text-3xl md:text-5xl lg:text-6xl mb-6"><span class="text-transparent bg-clip-text bg-gradient-to-r from-neon-blue to-neon-pink">CATÁLOGO</span></h2>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="glass-ultra p-10 rounded-3xl text-center card-cyber border border-neon-blue/30">
+                <div class="glass-ultra p-6 lg:p-10 rounded-3xl text-center card-cyber border border-neon-blue/30">
                     <div class="text-6xl mb-4">⭐</div>
                     <h3 class="font-orbitron font-bold text-2xl text-neon-blue mb-4">Artículos Destacados</h3>
                     <p class="text-gray-300 font-rajdhani text-lg">Lo mejor seleccionado para ti</p>
                 </div>
-                <div class="glass-ultra p-10 rounded-3xl text-center card-cyber border border-neon-pink/30">
+                <div class="glass-ultra p-6 lg:p-10 rounded-3xl text-center card-cyber border border-neon-pink/30">
                     <div class="text-6xl mb-4">🔥</div>
                     <h3 class="font-orbitron font-bold text-2xl text-neon-pink mb-4">Promociones</h3>
                     <p class="text-gray-300 font-rajdhani text-lg">Ofertas especiales del mes</p>
                 </div>
-                <div class="glass-ultra p-10 rounded-3xl text-center card-cyber border border-neon-purple/30">
+                <div class="glass-ultra p-6 lg:p-10 rounded-3xl text-center card-cyber border border-neon-purple/30">
                     <div class="text-6xl mb-4">🆕</div>
                     <h3 class="font-orbitron font-bold text-2xl text-neon-purple mb-4">Novedades</h3>
                     <p class="text-gray-300 font-rajdhani text-lg">Lo último en videojuegos</p>
@@ -569,14 +572,14 @@
     </section>
 
     <!-- SOPORTE -->
-    <section class="relative py-40 bg-cyber-dark overflow-hidden section-reveal" id="soporte">
+    <section class="relative py-16 md:py-32 lg:py-40 bg-cyber-dark overflow-hidden section-reveal" id="soporte">
         <div class="absolute inset-0 cyber-grid opacity-30"></div>
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h2 class="font-syncopate font-bold text-5xl lg:text-6xl mb-6"><span class="text-neon-blue neon-text-blue">SOPORTE</span></h2>
+                <h2 class="font-syncopate font-bold text-3xl md:text-5xl lg:text-6xl mb-6"><span class="text-neon-blue neon-text-blue">SOPORTE</span></h2>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="glass-ultra p-10 rounded-3xl card-cyber border border-white/10">
+                <div class="glass-ultra p-6 lg:p-10 rounded-3xl card-cyber border border-white/10">
                     <div class="flex items-center mb-6">
                         <div class="w-14 h-14 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl flex items-center justify-center mr-4">
                             <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
@@ -585,7 +588,7 @@
                     </div>
                     <p class="text-gray-300 font-rajdhani text-lg">Facturación electrónica y comprobantes digitales</p>
                 </div>
-                <div class="glass-ultra p-10 rounded-3xl card-cyber border border-white/10">
+                <div class="glass-ultra p-6 lg:p-10 rounded-3xl card-cyber border border-white/10">
                     <div class="flex items-center mb-6">
                         <div class="w-14 h-14 bg-gradient-to-br from-neon-blue to-electric-blue rounded-xl flex items-center justify-center mr-4">
                             <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
@@ -599,17 +602,17 @@
     </section>
 
     <!-- COQUI ARCADE: Fidelización de Clientes -->
-    <section class="relative py-40 bg-cyber-dark overflow-hidden section-reveal" id="arcade">
+    <section class="relative py-16 md:py-32 lg:py-40 bg-cyber-dark overflow-hidden section-reveal" id="arcade">
         <div class="cyber-grid absolute inset-0 opacity-30"></div>
-        <div class="absolute top-1/3 left-1/4 w-[500px] h-[500px] bg-neon-pink/10 rounded-full blur-[120px]"></div>
-        <div class="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-neon-blue/10 rounded-full blur-[120px]"></div>
+        <div class="absolute top-1/3 left-1/4 w-[250px] h-[250px] md:w-[500px] md:h-[500px] bg-neon-pink/10 rounded-full blur-[120px]"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-[250px] h-[250px] md:w-[500px] md:h-[500px] bg-neon-blue/10 rounded-full blur-[120px]"></div>
 
         <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
                 <div class="inline-block px-6 py-3 glass-ultra rounded-full border border-neon-pink/50 mb-6">
                     <span class="font-orbitron text-neon-pink font-bold tracking-widest text-sm">[ PROGRAMA DE FIDELIZACIÓN ]</span>
                 </div>
-                <h2 class="font-syncopate font-bold text-5xl mb-4"><span class="text-neon-blue neon-text-blue">COQUI</span> <span class="text-neon-pink neon-text-pink">ARCADE</span></h2>
+                <h2 class="font-syncopate font-bold text-3xl md:text-5xl mb-4"><span class="text-neon-blue neon-text-blue">COQUI</span> <span class="text-neon-pink neon-text-pink">ARCADE</span></h2>
                 <p class="font-rajdhani text-2xl text-gray-400 max-w-3xl mx-auto">Rompe bloques, supera el récord y gana premios. <span class="text-neon-blue font-bold">Cada viernes</span>, quien supere el récord de la semana se lleva un <span class="text-neon-pink font-bold">cupón de descuento</span>.</p>
             </div>
 
@@ -645,11 +648,11 @@
                             </div>
                         </div>
                         <div class="relative w-full flex justify-center">
-                            <canvas id="arcadeCanvas" width="700" height="500" class="w-full max-w-full rounded-lg border border-neon-blue/50" style="background:#050508; box-shadow: 0 0 40px rgba(0,243,255,0.25), inset 0 0 40px rgba(0,0,0,0.6); cursor:none;"></canvas>
-                            <div id="arcadeOverlay" class="absolute inset-0 flex flex-col items-center justify-center text-center rounded-lg" style="background:rgba(5,5,8,0.85); backdrop-filter: blur(4px);">
-                                <h3 id="arcadeOverlayTitle" class="font-syncopate font-bold text-3xl text-neon-blue neon-text-blue mb-3">COQUI ARCADE</h3>
-                                <p id="arcadeOverlayText" class="font-rajdhani text-xl text-gray-300 mb-6 max-w-md px-4">Rompe todos los bloques, no dejes caer la pelota y lucha por el primer lugar del récord semanal.</p>
-                                <button id="arcadePlayBtn" class="btn-cyber bg-gradient-to-r from-neon-blue to-electric-blue px-10 py-4 font-orbitron font-bold text-black">JUGAR →</button>
+                            <canvas id="arcadeCanvas" width="700" height="500" class="w-full h-auto aspect-[7/5] rounded-lg border border-neon-blue/50" style="background:#050508; box-shadow: 0 0 40px rgba(0,243,255,0.25), inset 0 0 40px rgba(0,0,0,0.6); cursor:none;"></canvas>
+                            <div id="arcadeOverlay" class="absolute inset-0 flex flex-col items-center justify-center text-center rounded-lg p-4" style="background:rgba(5,5,8,0.85); backdrop-filter: blur(4px);">
+                                <h3 id="arcadeOverlayTitle" class="font-syncopate font-bold text-xl sm:text-3xl text-neon-blue neon-text-blue mb-2 sm:mb-3">COQUI ARCADE</h3>
+                                <p id="arcadeOverlayText" class="font-rajdhani text-sm sm:text-xl text-gray-300 mb-4 sm:mb-6 max-w-md px-2 sm:px-4">Rompe todos los bloques, no dejes caer la pelota y lucha por el primer lugar del récord semanal.</p>
+                                <button id="arcadePlayBtn" class="btn-cyber bg-gradient-to-r from-neon-blue to-electric-blue px-6 py-3 sm:px-10 sm:py-4 font-orbitron font-bold text-black text-sm sm:text-base">JUGAR →</button>
                             </div>
                         </div>
                     </div>
@@ -659,10 +662,10 @@
     </section>
 
     <!-- CHAPTER 4: Locations (Sucursales) -->
-    <section class="relative py-40 bg-cyber-black overflow-hidden section-reveal" id="sucursales">
+    <section class="relative py-16 md:py-32 lg:py-40 bg-cyber-black overflow-hidden section-reveal" id="sucursales">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h2 class="font-syncopate font-bold text-5xl mb-4"><span class="text-neon-pink neon-text-pink">PUNTOS DE VENTA</span></h2>
+                <h2 class="font-syncopate font-bold text-3xl md:text-5xl mb-4"><span class="text-neon-pink neon-text-pink">PUNTOS DE VENTA</span></h2>
                 <p class="font-rajdhani text-2xl text-gray-400">11 sucursales listas para atenderte</p>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -695,12 +698,12 @@
     </section>
 
     <!-- CONTACTO Y UBICACIÓN -->
-    <section class="relative py-40 bg-cyber-dark overflow-hidden section-reveal" id="contacto">
+    <section class="relative py-16 md:py-32 lg:py-40 bg-cyber-dark overflow-hidden section-reveal" id="contacto">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h2 class="font-syncopate font-bold text-5xl lg:text-6xl mb-6"><span class="text-transparent bg-clip-text bg-gradient-to-r from-neon-blue to-neon-pink">¿DÓNDE ESTAMOS?</span></h2>
+                <h2 class="font-syncopate font-bold text-3xl md:text-5xl lg:text-6xl mb-6"><span class="text-transparent bg-clip-text bg-gradient-to-r from-neon-blue to-neon-pink">¿DÓNDE ESTAMOS?</span></h2>
             </div>
-            <div class="glass-ultra p-10 rounded-3xl border border-white/10">
+            <div class="glass-ultra p-6 lg:p-10 rounded-3xl border border-white/10">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
                     <div>
                         <h3 class="font-orbitron font-bold text-2xl text-neon-blue mb-6">Información de Contacto</h3>
@@ -747,7 +750,7 @@
     <!-- ========================================== -->
     <!-- CHATBOT ASISTENTE 24/7 (Reemplaza al Trojan) -->
     <!-- ========================================== -->
-    <button onclick="toggleChat()" class="fixed bottom-8 right-8 z-50 bg-gradient-to-r from-neon-blue to-electric-blue hover:from-cyan-400 hover:to-blue-500 text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-all animate-pulse border-2 border-white/20 group">
+    <button onclick="toggleChat()" class="fixed bottom-4 right-4 md:bottom-8 md:right-8 z-50 bg-gradient-to-r from-neon-blue to-electric-blue hover:from-cyan-400 hover:to-blue-500 text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-all animate-pulse border-2 border-white/20 group">
         <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
     </button>
 

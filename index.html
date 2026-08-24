@@ -148,8 +148,8 @@
         @keyframes neon-line-pulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 0.9; } }
         
         .cube-container { perspective: 2000px; width: 100%; height: 600px; display: flex; justify-content: center; align-items: center; position: relative; }
-        .cube { width: 350px; height: 450px; position: relative; transform-style: preserve-3d; transition: transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .cube-face { position: absolute; width: 350px; height: 450px; background: rgba(18, 18, 26, 0.95); border: 2px solid rgba(0, 243, 255, 0.3); border-radius: 20px; overflow: hidden; box-shadow: 0 0 30px rgba(0, 243, 255, 0.3), inset 0 0 30px rgba(0, 243, 255, 0.1); backdrop-filter: blur(10px); }
+        .cube { width: 350px; height: 450px; position: relative; transform-style: preserve-3d; transition: transform 1s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .cube-face { position: absolute; width: 100%; height: 100%; top: 0; left: 0; backface-visibility: hidden; border-radius: 24px; overflow: hidden; border: 1px solid rgba(0, 243, 255, 0.4); box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9), 0 0 40px rgba(0, 243, 255, 0.35); background: #000; }
         .cube-face-image-container { width: 100%; height: 300px; background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 100%); display: flex; align-items: center; justify-content: center; padding: 20px; overflow: hidden; }
         .cube-face-image-container img { width: 100%; height: 100%; object-fit: contain; object-position: center; transition: transform 0.5s ease; }
         .cube-face:hover .cube-face-image-container img { transform: scale(1.1); }
@@ -281,6 +281,7 @@
             .cube-face-content p { font-size: 0.75rem; margin-bottom: 8px; }
             .cube-face-front { transform: rotateY(0deg) translateZ(140px); } .cube-face-back { transform: rotateY(180deg) translateZ(140px); }
             .cube-face-right { transform: rotateY(90deg) translateZ(140px); } .cube-face-left { transform: rotateY(-90deg) translateZ(140px); }
+            .cube-face-top { transform: rotateX(90deg) translateZ(190px); } .cube-face-bottom { transform: rotateX(-90deg) translateZ(190px); }
             .navbar-logo-container { width: 220px; height: 70px; } .nav-link-neo { padding: 12px 20px; font-size: 14px; } .btn-cart-neo { padding: 12px 24px; font-size: 12px; }
             .chat-window { width: calc(100% - 32px); right: 16px; bottom: 85px; height: calc(100vh - 110px); max-height: 450px; }
         }
@@ -372,17 +373,17 @@
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div class="glass-ultra p-8 rounded-2xl card-cyber border border-white/10">
-                    <div class="text-6xl font-syncopate font-bold text-neon-blue mb-4">1998</div>
+                    <div class="text-4xl md:text-5xl lg:text-6xl font-syncopate font-bold text-neon-blue mb-4">1998</div>
                     <h3 class="font-orbitron font-bold text-2xl mb-4">EL INICIO</h3>
                     <p class="text-gray-400 font-rajdhani text-lg">Comenzamos la revolución gamer en Costa Rica. Los primeros en traer lo mejor del mundo de los videojuegos.</p>
                 </div>
                 <div class="glass-ultra p-8 rounded-2xl card-cyber border border-white/10">
-                    <div class="text-6xl font-syncopate font-bold text-neon-pink mb-4">2026</div>
+                    <div class="text-4xl md:text-5xl lg:text-6xl font-syncopate font-bold text-neon-pink mb-4">2026</div>
                     <h3 class="font-orbitron font-bold text-2xl mb-4">LA EVOLUCIÓN</h3>
                     <p class="text-gray-400 font-rajdhani text-lg">11 sucursales, miles de productos y una comunidad que crece cada día. Seguimos liderando el mercado.</p>
                 </div>
                 <div class="glass-ultra p-8 rounded-2xl card-cyber border border-white/10">
-                    <div class="text-6xl font-syncopate font-bold text-neon-blue mb-4">FUTURO</div>
+                    <div class="text-4xl md:text-5xl lg:text-6xl font-syncopate font-bold text-neon-blue mb-4">FUTURO</div>
                     <h3 class="font-orbitron font-bold text-2xl mb-4">NEXT LEVEL</h3>
                     <p class="text-gray-400 font-rajdhani text-lg">Preparados para la siguiente generación. Realidad virtual, cloud gaming y más.</p>
                 </div>

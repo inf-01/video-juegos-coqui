@@ -135,7 +135,17 @@
         .navbar-neo.scrolled { box-shadow: 15px 15px 40px rgba(0, 0, 0, 0.95), 8px 8px 25px rgba(0, 0, 0, 0.85), -8px -8px 25px rgba(0, 243, 255, 0.2), -4px -4px 15px rgba(255, 255, 255, 0.15), inset 0 3px 0 rgba(255, 255, 255, 0.2), inset 0 -3px 0 rgba(0, 0, 0, 0.7); border-bottom: 2px solid rgba(0, 243, 255, 0.3); }
         
         .navbar-logo-container { position: relative; width: 320px; height: 100px; flex-shrink: 0; overflow: visible; }
-        .navbar-logo-container img { width: 100%; height: 100%; object-fit: contain; object-position: center; filter: drop-shadow(0 4px 12px rgba(0, 243, 255, 0.4)); }
+        .navbar-logo-container img { width: 100%; height: 100%; object-fit: contain; object-position: left; filter: drop-shadow(0 4px 12px rgba(0, 243, 255, 0.4)); }
+        
+        .menu-toggle { display: none; background: #0a0a0f; border: 1px solid rgba(0, 243, 255, 0.3); width: 44px; height: 44px; border-radius: 12px; cursor: pointer; flex-direction: column; justify-content: center; align-items: center; gap: 5px; padding: 10px; box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.8), -2px -2px 6px rgba(0, 243, 255, 0.1); transition: all 0.3s ease; z-index: 1001; }
+        .menu-toggle:hover { border-color: rgba(0, 243, 255, 0.8); box-shadow: 0 0 15px rgba(0, 243, 255, 0.5); }
+        .menu-toggle span { display: block; width: 22px; height: 2px; background-color: #00f3ff; border-radius: 2px; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .menu-toggle.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .menu-toggle.active span:nth-child(2) { opacity: 0; transform: translateX(-8px); }
+        .menu-toggle.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+        
+        .mobile-menu { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(5, 5, 8, 0.98); backdrop-filter: blur(20px); z-index: 999; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 2rem; opacity: 0; pointer-events: none; transition: opacity 0.4s ease; }
+        .mobile-menu.open { opacity: 1; pointer-events: auto; }
         
         .nav-link-neo { position: relative; padding: 14px 32px; border-radius: 9999px; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0.3) 100%); box-shadow: 6px 6px 15px rgba(0, 0, 0, 0.7), -6px -6px 15px rgba(0, 243, 255, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.15); border: 1px solid rgba(0, 243, 255, 0.15); font-weight: 700; }
         .nav-link-neo:hover { background: linear-gradient(145deg, rgba(0, 243, 255, 0.15) 0%, rgba(0, 0, 0, 0.4) 100%); box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.75), -8px -8px 20px rgba(0, 243, 255, 0.2), inset 0 2px 0 rgba(255, 255, 255, 0.2); color: #00f3ff !important; transform: translateY(-3px); border-color: rgba(0, 243, 255, 0.4); }
@@ -275,10 +285,12 @@
         
         @media (max-width: 768px) {
             body { cursor: auto; } .cursor, .cursor-follower { display: none; }
-            .cube { width: 280px; height: 380px; } .cube-face { width: 280px; height: 380px; } .cube-face-image-container { height: 220px; }
-            .cube-face-content { padding: 12px; }
-            .cube-face-content h3 { font-size: 1.25rem; margin-bottom: 4px; }
-            .cube-face-content p { font-size: 0.75rem; margin-bottom: 8px; }
+            .cube { width: 280px; height: 380px; } .cube-face { width: 280px; height: 380px; } .cube-face-image-container { height: 180px; padding: 10px; }
+            .cube-face-content { padding: 10px 14px; }
+            .cube-face-content h3 { font-size: 1.1rem; margin-bottom: 2px; }
+            .cube-face-content p { font-size: 0.75rem; margin-bottom: 6px; }
+            .cube-face-content .font-syncopate { font-size: 1.25rem !important; }
+            .cube-face-content button { padding: 6px 10px !important; font-size: 0.75rem !important; }
             .cube-face-front { transform: rotateY(0deg) translateZ(140px); } .cube-face-back { transform: rotateY(180deg) translateZ(140px); }
             .cube-face-right { transform: rotateY(90deg) translateZ(140px); } .cube-face-left { transform: rotateY(-90deg) translateZ(140px); }
             .cube-face-top { transform: rotateX(90deg) translateZ(190px); } .cube-face-bottom { transform: rotateX(-90deg) translateZ(190px); }
@@ -308,13 +320,21 @@
                     <a href="#sucursales" class="nav-link-neo text-white">SUCURSALES</a>
                     <a href="#arcade" class="btn-cart-neo text-white" style="display:inline-block; text-decoration:none;">🎮 JUGAR ARCADE</a>
                 </div>
-                <button class="lg:hidden text-white p-2" onclick="toggleMenu()">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                <button class="menu-toggle lg:hidden flex" id="menuToggle" onclick="toggleMenu()">
+                    <span></span><span></span><span></span>
                 </button>
             </div>
         </div>
         <div class="navbar-neon-line"></div>
     </nav>
+    
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#consolas" class="nav-link-neo text-white" onclick="toggleMenu()">CONSOLAS</a>
+        <a href="#juegos" class="nav-link-neo text-white" onclick="toggleMenu()">JUEGOS</a>
+        <a href="#retro" class="nav-link-neo text-white" onclick="toggleMenu()">RETRO</a>
+        <a href="#sucursales" class="nav-link-neo text-white" onclick="toggleMenu()">SUCURSALES</a>
+        <a href="#arcade" class="btn-cart-neo text-white" onclick="toggleMenu()" style="display:inline-block; text-decoration:none;">🎮 JUGAR ARCADE</a>
+    </div>
 
     <!-- HERO SECTION -->
     <section class="relative min-h-screen flex items-center justify-center overflow-hidden cyber-grid" id="inicio">
@@ -325,8 +345,8 @@
         <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-32">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                 <div class="space-y-8">
-                    <div class="inline-block px-6 py-3 glass-ultra rounded-full border border-neon-blue/50">
-                        <span class="font-orbitron text-neon-blue font-bold tracking-widest text-sm">[ SISTEMA INICIADO // 1998 ]</span>
+                    <div class="inline-block px-4 py-2 sm:px-6 sm:py-3 glass-ultra rounded-full border border-neon-blue/50 max-w-full overflow-hidden">
+                        <span class="font-orbitron text-neon-blue font-bold tracking-wider sm:tracking-widest text-xs sm:text-sm whitespace-nowrap block text-ellipsis overflow-hidden">[ SISTEMA INICIADO // 1998 ]</span>
                     </div>
                     <h1 class="font-syncopate font-bold text-3xl md:text-4xl lg:text-6xl leading-[1.05] crt-power-on">
                         <span class="block text-white chroma-title crt-scan-sweep" data-text="DESPIERTA AL">DESPIERTA AL</span>
@@ -373,17 +393,17 @@
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div class="glass-ultra p-8 rounded-2xl card-cyber border border-white/10">
-                    <div class="text-4xl md:text-5xl lg:text-6xl font-syncopate font-bold text-neon-blue mb-4">1998</div>
+                    <div class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-syncopate font-bold text-neon-blue mb-4">1998</div>
                     <h3 class="font-orbitron font-bold text-2xl mb-4">EL INICIO</h3>
                     <p class="text-gray-400 font-rajdhani text-lg">Comenzamos la revolución gamer en Costa Rica. Los primeros en traer lo mejor del mundo de los videojuegos.</p>
                 </div>
                 <div class="glass-ultra p-8 rounded-2xl card-cyber border border-white/10">
-                    <div class="text-4xl md:text-5xl lg:text-6xl font-syncopate font-bold text-neon-pink mb-4">2026</div>
+                    <div class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-syncopate font-bold text-neon-pink mb-4">2026</div>
                     <h3 class="font-orbitron font-bold text-2xl mb-4">LA EVOLUCIÓN</h3>
                     <p class="text-gray-400 font-rajdhani text-lg">11 sucursales, miles de productos y una comunidad que crece cada día. Seguimos liderando el mercado.</p>
                 </div>
                 <div class="glass-ultra p-8 rounded-2xl card-cyber border border-white/10">
-                    <div class="text-4xl md:text-5xl lg:text-6xl font-syncopate font-bold text-neon-blue mb-4">FUTURO</div>
+                    <div class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-syncopate font-bold text-neon-blue mb-4">FUTURO</div>
                     <h3 class="font-orbitron font-bold text-2xl mb-4">NEXT LEVEL</h3>
                     <p class="text-gray-400 font-rajdhani text-lg">Preparados para la siguiente generación. Realidad virtual, cloud gaming y más.</p>
                 </div>
@@ -1119,6 +1139,14 @@
                 const mouseX = (e.clientX - rect.left) * scaleX;
                 game.paddle.x = Math.min(Math.max(mouseX - game.paddle.w / 2, 0), W - game.paddle.w);
             });
+            
+            canvas.addEventListener('touchmove', (e) => {
+                e.preventDefault();
+                const rect = canvas.getBoundingClientRect();
+                const scaleX = W / rect.width;
+                const touchX = (e.touches[0].clientX - rect.left) * scaleX;
+                game.paddle.x = Math.min(Math.max(touchX - game.paddle.w / 2, 0), W - game.paddle.w);
+            }, { passive: false });
 
             const keys = {};
             document.addEventListener('keydown', (e) => {
@@ -1138,7 +1166,13 @@
             document.getElementById('storeInfo').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
         function closeStoreInfo() { document.getElementById('storeInfo').classList.add('hidden'); }
-        function toggleMenu() { alert('Menú móvil - Implementar drawer navigation cyberpunk'); }
+        
+        function toggleMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const toggle = document.getElementById('menuToggle');
+            menu.classList.toggle('open');
+            toggle.classList.toggle('active');
+        }
         
         if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
             gsap.registerPlugin(ScrollTrigger);

@@ -845,10 +845,12 @@
         updateCube(); startAutoRotate();
         
         let startX = 0, currentX = 0, isDragging = false;
+        const cubeContainer = document.querySelector('.cube-container');
         
         function handleDragStart(e) {
             isDragging = true;
             startX = e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
+            currentX = startX;
             clearInterval(autoRotateInterval);
         }
         function handleDragMove(e) {
@@ -856,7 +858,7 @@
             currentX = e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
             const diff = startX - currentX;
             const rotation = rotations[currentFace];
-            const tempY = rotation.y - (diff / 3);
+            const tempY = rotation.y - (diff / 2.5); // Slightly faster rotation mapping
             cube.style.transition = 'none';
             cube.style.transform = `rotateX(${rotation.x}deg) rotateY(${tempY}deg)`;
         }
@@ -865,7 +867,7 @@
             isDragging = false;
             cube.style.transition = 'transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1)';
             const diff = startX - currentX;
-            if (Math.abs(diff) > 50) {
+            if (Math.abs(diff) > 40) { // More sensitive snap
                 diff > 0 ? rotateCube('next') : rotateCube('prev');
             } else {
                 updateCube();
@@ -874,10 +876,10 @@
             startX = 0; currentX = 0;
         }
 
-        cube.addEventListener('touchstart', handleDragStart, {passive: true});
-        cube.addEventListener('touchmove', handleDragMove, {passive: true});
-        cube.addEventListener('touchend', handleDragEnd);
-        cube.addEventListener('mousedown', handleDragStart);
+        cubeContainer.addEventListener('touchstart', handleDragStart, {passive: true});
+        cubeContainer.addEventListener('touchmove', handleDragMove, {passive: true});
+        cubeContainer.addEventListener('touchend', handleDragEnd);
+        cubeContainer.addEventListener('mousedown', handleDragStart);
         window.addEventListener('mousemove', handleDragMove);
         window.addEventListener('mouseup', handleDragEnd);
         
